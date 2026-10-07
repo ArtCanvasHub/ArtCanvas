@@ -548,7 +548,7 @@
     /* Artist */
     drawOn(modalEl.querySelector('.wm-artist-av'), window.drawWatcher, artist.seed);
     modalEl.querySelector('.wm-artist-name').innerHTML =
-      `<a href="index.html" class="wm-artist-link">${artist.name}</a>`;
+      `<a href="artist.html#${artist.id}" class="wm-artist-link">${artist.name}</a>`;
     modalEl.querySelector('.wm-artist-tag').textContent = artist.tagline;
 
     /* Meta */
@@ -707,7 +707,7 @@
     const nameEl = document.createElement('a');
     nameEl.className = 'art-card-author-name';
     nameEl.textContent = artist.name;
-    nameEl.href = 'index.html';
+    nameEl.href = 'artist.html#' + work.artistId;
 
     const statEl = document.createElement('span');
     statEl.className = 'art-card-stat';

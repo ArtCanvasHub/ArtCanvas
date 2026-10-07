@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artist — ArtCanvasHub</title>
+  <link rel="icon" href="images/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .artist-hero {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 40px 24px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--brd);
+    }
+    .artist-hero-av-wrap {
+      flex-shrink: 0;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--brd);
+    }
+    .artist-hero-av-wrap canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .artist-hero-info { flex: 1; min-width: 0; }
+    .artist-hero-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--fg);
+      margin: 0 0 4px;
+    }
+    .artist-hero-tagline {
+      font-size: 13px;
+      color: var(--fg3);
+      margin-bottom: 14px;
+    }
+    .artist-hero-stats {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .artist-hero-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .artist-hero-stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--fg);
+    }
+    .artist-hero-stat-label {
+      font-size: 11px;
+      color: var(--fg3);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .artist-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .artist-follow-btn {
+      padding: 8px 22px;
+      border-radius: 6px;
+      border: 1px solid var(--acc);
+      background: var(--acc);
+      color: #06070d;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .artist-follow-btn:hover { opacity: .85; }
+    .artist-follow-btn.following {
+      background: transparent;
+      color: var(--fg);
+      border-color: var(--brd);
+    }
+    .artist-msg-btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid var(--brd);
+      background: transparent;
+      color: var(--fg);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .artist-msg-btn:hover { background: var(--surf); }
+    .artist-page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .artist-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--brd);
+      margin-bottom: 28px;
+    }
+    .artist-tab {
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg3);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .artist-tab.active {
+      color: var(--fg);
+      border-bottom-color: var(--acc);
+    }
+    .artist-tab:hover { color: var(--fg); }
+    .artist-content-layout {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .artist-hero { flex-direction: column; align-items: flex-start; }
+      .artist-content-layout { grid-template-columns: 1fr; }
+      .artist-side { display: none; }
+    }
+    .artist-grid-section .masonry-grid { padding: 0; }
+    .artist-side-sc {
+      background: var(--surf);
+      border: 1px solid var(--brd);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .artist-side-hd {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--fg3);
+      margin-bottom: 12px;
+    }
+    .artist-side-about {
+      font-size: 12px;
+      color: var(--fg2);
+      line-height: 1.65;
+    }
+    .artist-tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+    .artist-tchip {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--brd);
+      color: var(--fg2);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .artist-tchip:hover { border-color: var(--acc); color: var(--acc); }
+    .artist-empty {
+      padding: 60px 24px;
+      text-align: center;
+      color: var(--fg3);
+      font-size: 14px;
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <a class="logo" href="home.html">
+    <img src="images/logo.svg" class="logo-icon" alt="ArtCanvasHub">
+    <span class="logo-text">Art<em>CanvasHub</em></span>
+  </a>
+  <button class="nav-shop">Shop</button>
+  <div class="srch">
+    <span class="srch-ico">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+    <input type="search" id="searchInput" placeholder="Search artists, works, tags…">
+  </div>
+  <nav class="nav-links">
+    <a class="nav-page-link" href="home.html" data-page="home.html">Home</a>
+    <a class="nav-page-link" href="browse.html" data-page="browse.html">Explore</a>
+    <a class="nav-page-link" href="index.html" data-page="index.html">My Profile</a>
+  </nav>
+  <div class="nav-r">
+    <button class="btn-submit">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"/></svg>
+      Submit Your Art
+    </button>
+    <button class="nav-icon-btn" title="Messages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <button class="nav-icon-btn" title="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="nav-av"><canvas id="navAv" width="36" height="36"></canvas></div>
+  </div>
+</nav>
+
+<!-- ── ARTIST HERO ── -->
+<div class="artist-hero" id="artistHero">
+  <div class="artist-hero-av-wrap">
+    <canvas id="artistAvCanvas" width="96" height="96"></canvas>
+  </div>
+  <div class="artist-hero-info">
+    <h1 class="artist-hero-name" id="artistName">Loading…</h1>
+    <div class="artist-hero-tagline" id="artistTagline"></div>
+    <div class="artist-hero-stats" id="artistStats"></div>
+    <div class="artist-hero-actions">
+      <button class="artist-follow-btn btn-follow-toggle" data-following="false" id="artistFollowBtn">+ Follow</button>
+      <button class="artist-msg-btn" id="artistMsgBtn">Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TABS + CONTENT ── -->
+<div class="artist-page-wrap">
+  <div class="artist-tabs">
+    <button class="artist-tab active">Gallery</button>
+    <button class="artist-tab">About</button>
+    <button class="artist-tab">Collections</button>
+  </div>
+
+  <div class="artist-content-layout">
+    <div class="artist-grid-section">
+      <div class="masonry-grid" id="artistGrid"></div>
+    </div>
+    <aside class="artist-side" id="artistSide"></aside>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="footer-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
+      </span>
+      <span class="footer-logo-text">Art<em>CanvasHub</em></span>
+    </div>
+    <div class="footer-links">
+      <a href="home.html">Home</a><a href="browse.html">Explore</a><a href="#">About</a>
+      <a href="#">Help</a><a href="#">Privacy</a><a href="#">Terms</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 ArtCanvasHub</div>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const user = window.AC_AUTH?.requireAuth();
+  if (!user) return;
+
+  /* Nav avatar */
+  const navAvEl = document.getElementById('navAv');
+  if (navAvEl) {
+    if (user.picture) {
+      const img = document.createElement('img');
+      img.src = user.picture;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+      img.onerror = () => window.AC.drawOn(navAvEl, window.drawAvatar);
+      navAvEl.parentNode.replaceChild(img, navAvEl);
+    } else {
+      window.AC.drawOn(navAvEl, window.drawAvatar);
+    }
+  }
+
+  /* Search */
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.value.trim()) {
+      location.href = 'browse.html?q=' + encodeURIComponent(e.target.value.trim());
+    }
+  });
+
+  /* Read artist id from hash (#N) or query (?id=N) */
+  const hashId = parseInt(location.hash.slice(1), 10);
+  const qId    = parseInt(new URLSearchParams(location.search).get('id'), 10);
+  const artistId = hashId || qId;
+  const artist = window.AC_ARTISTS && window.AC_ARTISTS.find(a => a.id === artistId);
+
+  if (!artist) {
+    location.replace('index.html');
+    return;
+  }
+
+  /* Set page title */
+  document.title = artist.name + ' — ArtCanvasHub';
+
+  /* Draw avatar */
+  const avCv = document.getElementById('artistAvCanvas');
+  window.AC.drawOn(avCv, window.drawWatcher, artist.seed);
+
+  /* Name + tagline */
+  document.getElementById('artistName').textContent = artist.name;
+  document.getElementById('artistTagline').textContent = artist.tagline;
+
+  /* Works for this artist */
+  const artistWorks = (window.AC_WORKS || []).filter(w => w.artistId === artist.id);
+  const totalLikes  = artistWorks.reduce((sum, w) => sum + w.likes, 0);
+  const totalViews  = artistWorks.reduce((acc, w) => {
+    const n = parseFloat(w.views) * (w.views.includes('K') ? 1000 : 1);
+    return acc + n;
+  }, 0);
+  const viewsStr = totalViews >= 1000000
+    ? (totalViews / 1000000).toFixed(1) + 'M'
+    : totalViews >= 1000
+    ? Math.round(totalViews / 1000) + 'K'
+    : String(totalViews);
+
+  /* Stats */
+  document.getElementById('artistStats').innerHTML = `
+    <div class="artist-hero-stat">
+      <span class="artist-hero-stat-val">${artist.followers}</span>
+      <span class="artist-hero-stat-label">Followers</span>
+    </div>
+    <div class="artist-hero-stat">
+      <span class="artist-hero-stat-val">${artistWorks.length}</span>
+      <span class="artist-hero-stat-label">Works</span>
+    </div>
+    <div class="artist-hero-stat">
+      <span class="artist-hero-stat-val">${totalLikes.toLocaleString()}</span>
+      <span class="artist-hero-stat-label">Total Likes</span>
+    </div>
+    <div class="artist-hero-stat">
+      <span class="artist-hero-stat-val">${viewsStr}</span>
+      <span class="artist-hero-stat-label">Total Views</span>
+    </div>
+  `;
+
+  /* Follow / message buttons */
+  document.getElementById('artistFollowBtn').addEventListener('click', function () {
+    const following = this.dataset.following === 'true';
+    this.dataset.following = String(!following);
+    this.textContent = !following ? 'Following' : '+ Follow';
+    this.classList.toggle('following', !following);
+    window.AC.showToast(!following ? 'Now following ' + artist.name : 'Unfollowed ' + artist.name, !following ? 'success' : '');
+  });
+  document.getElementById('artistMsgBtn').addEventListener('click', () => {
+    window.AC.showToast('Messages coming soon!');
+  });
+
+  /* Tabs (non-Gallery are stubs) */
+  document.querySelectorAll('.artist-tab').forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.artist-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      if (i > 0) window.AC.showToast('Coming soon!');
+    });
+  });
+
+  /* Gallery grid */
+  const grid = document.getElementById('artistGrid');
+  if (artistWorks.length === 0) {
+    grid.innerHTML = '<div class="artist-empty">This artist hasn\'t posted any works yet.</div>';
+  } else {
+    const queue = artistWorks.map(w => w.id);
+    artistWorks.forEach(work => {
+      const card = window.AC.makeArtCard(work);
+      card.addEventListener('click', e => {
+        if (e.target.closest('.art-like-btn') || e.target.closest('.art-card-author-name')) return;
+        window.AC.openWork(work.id, queue);
+      }, true);
+      grid.appendChild(card);
+    });
+  }
+
+  /* Sidebar */
+  const allTags = [...new Set(artistWorks.flatMap(w => w.tags))].slice(0, 12);
+  const otherArtists = (window.AC_ARTISTS || []).filter(a => a.id !== artist.id).slice(0, 5);
+
+  document.getElementById('artistSide').innerHTML = `
+    <div class="artist-side-sc">
+      <div class="artist-side-hd">About</div>
+      <div class="artist-side-about">${artist.tagline}<br><br>Member since 2024 · ${artistWorks.length} work${artistWorks.length !== 1 ? 's' : ''} · ${artist.followers} followers</div>
+    </div>
+    <div class="artist-side-sc">
+      <div class="artist-side-hd">Tags</div>
+      <div class="artist-tag-cloud">
+        ${allTags.map(t => `<a class="artist-tchip" href="browse.html?q=${encodeURIComponent(t)}">#${t}</a>`).join('')}
+      </div>
+    </div>
+    <div class="artist-side-sc">
+      <div class="artist-side-hd">More Artists</div>
+      ${otherArtists.map(a => `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <canvas class="other-artist-av" width="36" height="36" data-seed="${a.seed}" style="border-radius:50%;flex-shrink:0"></canvas>
+          <div style="min-width:0;flex:1">
+            <div style="font-size:13px;font-weight:600"><a href="artist.html#${a.id}" style="color:var(--fg);text-decoration:none">${a.name}</a></div>
+            <div style="font-size:11px;color:var(--fg3)">${a.followers} followers</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  /* Draw "other artist" avatars in the sidebar */
+  document.querySelectorAll('.other-artist-av').forEach(cv => {
+    window.AC.drawOn(cv, window.drawWatcher, +cv.dataset.seed);
+  });
+});
+</script>
+</body>
+</html>

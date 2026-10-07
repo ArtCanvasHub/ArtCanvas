@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     item.innerHTML = `
       <div class="fa-av"></div>
       <div class="fa-info">
-        <div class="fa-name"><a href="index.html">${a.name}</a></div>
+        <div class="fa-name"><a href="artist.html#${a.id}">${a.name}</a></div>
         <div class="fa-followers">${a.followers} followers</div>
       </div>
       <button class="btn-follow-toggle" data-following="false">${btnLabel}</button>
