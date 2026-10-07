@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Explore — ArtCanvas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ── GLOBAL NAV ─────────────────────────────────── -->
+<nav class="nav">
+  <a class="logo" href="index.html">
+    <span class="logo-icon">
+      <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/><polygon points="6,12.5 14,12.5 15,15 5,15" fill="#05c26b" opacity=".55"/></svg>
+    </span>
+    <span class="logo-text">Art<em>Canvas</em></span>
+  </a>
+
+  <div class="srch">
+    <span class="srch-ico">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+    <input type="search" id="searchInput" placeholder="Search artists, works, tags…">
+  </div>
+
+  <nav class="nav-links">
+    <a class="nbtn nav-page-link active" href="browse.html" data-page="browse.html">Explore</a>
+    <a class="nbtn nav-page-link" href="index.html" data-page="index.html">Following</a>
+    <button class="nbtn">Shop</button>
+  </nav>
+
+  <div class="nav-r">
+    <button class="btn-submit">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"/></svg>
+      Upload Work
+    </button>
+    <button class="nav-icon-btn" title="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+    <div class="nav-av"><canvas id="navAv" width="36" height="36"></canvas></div>
+  </div>
+</nav>
+
+<!-- ── BROWSE PAGE ────────────────────────────────── -->
+<div class="browse-page">
+
+  <!-- Category / Sort bar -->
+  <div class="browse-bar">
+    <div class="browse-cats" id="browseCats">
+      <button class="cat-pill active" data-cat="all">All</button>
+      <button class="cat-pill" data-cat="sci-fi">Sci-Fi</button>
+      <button class="cat-pill" data-cat="fantasy">Fantasy</button>
+      <button class="cat-pill" data-cat="concept">Concept Art</button>
+      <button class="cat-pill" data-cat="character">Character</button>
+      <button class="cat-pill" data-cat="abstract">Abstract</button>
+      <button class="cat-pill" data-cat="dark">Dark Art</button>
+    </div>
+    <div class="browse-sort">
+      <button class="sort-pill active" data-sort="popular">Popular</button>
+      <button class="sort-pill" data-sort="new">New</button>
+      <button class="sort-pill" data-sort="trending">Trending</button>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="browse-layout">
+
+    <!-- Main grid -->
+    <main class="browse-main">
+      <div class="g-grid" id="browseGrid"></div>
+      <div class="load-more-row">
+        <button class="load-more-btn" id="loadMoreBtn">Load more</button>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="browse-side">
+
+      <!-- Trending Tags -->
+      <div class="sc">
+        <div class="sc-hd">Trending Tags</div>
+        <div class="tag-cloud">
+          <a class="tchip" href="#">#digitalart</a>
+          <a class="tchip" href="#">#fantasy</a>
+          <a class="tchip" href="#">#scifi</a>
+          <a class="tchip" href="#">#conceptart</a>
+          <a class="tchip" href="#">#characterdesign</a>
+          <a class="tchip" href="#">#environment</a>
+          <a class="tchip" href="#">#illustration</a>
+          <a class="tchip" href="#">#dragon</a>
+          <a class="tchip" href="#">#mecha</a>
+          <a class="tchip" href="#">#neon</a>
+          <a class="tchip" href="#">#space</a>
+          <a class="tchip" href="#">#abstract</a>
+        </div>
+      </div>
+
+      <!-- Featured Artists -->
+      <div class="sc">
+        <div class="sc-hd">Featured Artists</div>
+        <div class="featured-artists" id="featuredArtists"></div>
+      </div>
+
+      <!-- About ArtCanvas -->
+      <div class="sc">
+        <div class="sc-hd">About ArtCanvas</div>
+        <p style="font-size:12.5px;color:var(--fg2);line-height:1.65">
+          A home for artists to share their work, connect with others, and grow their audience.
+        </p>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="#" style="font-size:12px;color:var(--acc)">Join Free</a>
+          <span style="color:var(--fg3);font-size:12px">·</span>
+          <a href="#" style="font-size:12px;color:var(--fg2)">About</a>
+          <span style="color:var(--fg3);font-size:12px">·</span>
+          <a href="#" style="font-size:12px;color:var(--fg2)">Blog</a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer class="site-footer" style="margin-left:0">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="footer-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/><polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/></svg>
+      </span>
+      <span class="footer-logo-text">Art<em>Canvas</em></span>
+    </div>
+    <div class="footer-links">
+      <a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a>
+      <a href="#">Help</a><a href="#">API</a><a href="#">Privacy</a><a href="#">Terms</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 ArtCanvas</div>
+  </div>
+</footer>
+
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/browse.js"></script>
+</body>
+</html>
