@@ -1,22 +1,22 @@
 const GALLERY = [
-  {title:'Void Walker',    views:'14.2K', favs:'923',  artist:'YourUsername', style:'space'},
-  {title:'Forest Specter', views:'8.7K',  favs:'534',  artist:'YourUsername', style:'forest'},
-  {title:'Neon District',  views:'21.3K', favs:'1.4K', artist:'YourUsername', style:'neon'},
-  {title:'Cascade Dreams', views:'6.1K',  favs:'388',  artist:'YourUsername', style:'flow'},
-  {title:'Soul Fragment',  views:'11.9K', favs:'762',  artist:'YourUsername', style:'portrait'},
-  {title:'Ancient Wing',   views:'18.5K', favs:'1.1K', artist:'YourUsername', style:'dragon'},
-  {title:'Crystal Depths', views:'5.3K',  favs:'317',  artist:'YourUsername', style:'crystal'},
-  {title:'Iron Protocol',  views:'16.7K', favs:'989',  artist:'YourUsername', style:'mecha'},
-  {title:'Ember Tide',     views:'9.4K',  favs:'601',  artist:'YourUsername', style:'fire'},
+  {title:'Void Walker',      views:'14.2K', favs:'923',  artist:'NebulaForge',  style:'space'},
+  {title:'Ancient Grove',    views:'9.1K',  favs:'541',  artist:'NebulaForge',  style:'forest'},
+  {title:'Neon District',    views:'21.7K', favs:'1.4K', artist:'NebulaForge',  style:'neon'},
+  {title:'Flow State',       views:'6.3K',  favs:'298',  artist:'NebulaForge',  style:'flow'},
+  {title:'Portrait Study',   views:'11.0K', favs:'876',  artist:'NebulaForge',  style:'portrait'},
+  {title:'Dragon Epoch',     views:'18.4K', favs:'2.1K', artist:'NebulaForge',  style:'dragon'},
+  {title:'Crystal Spire',    views:'7.8K',  favs:'412',  artist:'NebulaForge',  style:'crystal'},
+  {title:'Mecha Risen',      views:'15.6K', favs:'1.1K', artist:'NebulaForge',  style:'mecha'},
+  {title:'Ember Fade',       views:'5.2K',  favs:'187',  artist:'NebulaForge',  style:'fire'},
 ];
 
 const FAVS = [
-  {title:'Starlight Echo', views:'32.1K', favs:'2.4K', artist:'NightVision',  style:'space'},
-  {title:'Shadow Bloom',   views:'14.8K', favs:'891',  artist:'DarkFlower',   style:'forest'},
-  {title:'Pulse City',     views:'27.3K', favs:'1.8K', artist:'NeonDreamer',  style:'neon'},
-  {title:'Flux',           views:'9.2K',  favs:'423',  artist:'WaveArt',      style:'flow'},
-  {title:'Silent Watcher', views:'18.4K', favs:'1.2K', artist:'GhostBrush',   style:'portrait'},
-  {title:'Sky Titan',      views:'41.7K', favs:'3.1K', artist:'DragonScale',  style:'dragon'},
+  {title:'Midnight Rain',    views:'8.3K',  favs:'620',  artist:'NightVision',  style:'forest'},
+  {title:'Bloom Protocol',   views:'12.1K', favs:'934',  artist:'DarkFlower',   style:'neon'},
+  {title:'Prism Break',      views:'4.9K',  favs:'271',  artist:'NeonDreamer',  style:'crystal'},
+  {title:'Tidal Surge',      views:'17.2K', favs:'1.3K', artist:'WaveArt',      style:'flow'},
+  {title:'Phantom Layer',    views:'9.7K',  favs:'558',  artist:'GhostBrush',   style:'space'},
+  {title:'Scale & Fire',     views:'22.3K', favs:'3.1K', artist:'DragonScale',  style:'dragon'},
 ];
 
 const GROUPS = [
@@ -25,17 +25,35 @@ const GROUPS = [
   {name:'SciFiArtists',   members:'67K members',  hue:200},
 ];
 
+const WATCHERS = [
+  {hue:0},   {hue:30},  {hue:60},  {hue:140}, {hue:200},
+  {hue:270}, {hue:330}, {hue:15},  {hue:90},  {hue:180},
+];
+
+// ── SVG icon strings for card overlays ──────────────────────
+const ICO_EYE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const ICO_HEART = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+
+function drawOn(canvas, fn, ...extra) {
+  const ctx = canvas.getContext('2d');
+  fn(ctx, canvas.width, canvas.height, ...extra);
+}
+
 function makeCard(art) {
   const card = document.createElement('div');
   card.className = 'art-card';
+
+  const seed = hashStr(art.title);
+  const fn = window.DRAW_FNS[art.style] || window.DRAW_FNS.space;
+
   card.innerHTML = `
     <div class="art-thumb">
       <canvas width="300" height="300"></canvas>
       <div class="art-ov">
         <div class="art-ov-title">${art.title}</div>
-        <div class="art-ov-row">
-          <span class="art-ov-stat">👁 ${art.views}</span>
-          <span class="art-ov-stat">♥ ${art.favs}</span>
+        <div class="art-ov-stats">
+          <span class="art-ov-stat">${ICO_EYE} ${art.views}</span>
+          <span class="art-ov-stat">${ICO_HEART} ${art.favs}</span>
         </div>
       </div>
     </div>
@@ -43,54 +61,81 @@ function makeCard(art) {
       <div class="art-title">${art.title}</div>
       <div class="art-artist">${art.artist}</div>
     </div>`;
-  const canvas = card.querySelector('canvas');
-  window.DRAW_FNS[art.style](canvas.getContext('2d'), 300, 300);
+
+  const cv = card.querySelector('canvas');
+  drawOn(cv, fn);
   return card;
 }
 
-// Tabs
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+// ── Tab switching ──────────────────────────────────────────
 document.querySelectorAll('.tbtn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tbtn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-    if (btn.dataset.tab === 'favourites' && !document.getElementById('favsGrid').children.length) {
-      const g = document.getElementById('favsGrid');
-      FAVS.forEach(art => g.appendChild(makeCard(art)));
-    }
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
 });
 
-window.addEventListener('DOMContentLoaded', () => {
+// ── Init ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
   // Banner
-  window.drawBanner(document.getElementById('bannerC').getContext('2d'), 1200, 280);
-  // Avatars
-  window.drawAvatar(document.getElementById('profAv').getContext('2d'), 176, 176);
-  window.drawAvatar(document.getElementById('navAv').getContext('2d'), 68, 68);
-  // Featured
-  window.DRAW_FNS.space(document.getElementById('featC').getContext('2d'), 480, 360);
+  const bannerC = document.getElementById('bannerC');
+  drawOn(bannerC, window.drawBanner);
+
+  // Nav avatar
+  const navAv = document.getElementById('navAv');
+  drawOn(navAv, window.drawAvatar);
+
+  // Profile avatar
+  const profAv = document.getElementById('profileAv');
+  drawOn(profAv, window.drawAvatar);
+
+  // Featured deviation canvas
+  const featC = document.getElementById('featCanvas');
+  drawOn(featC, window.DRAW_FNS.space);
+
   // Gallery
   const gg = document.getElementById('galleryGrid');
   GALLERY.forEach(art => gg.appendChild(makeCard(art)));
+
+  // Favs
+  const fg = document.getElementById('favsGrid');
+  FAVS.forEach(art => fg.appendChild(makeCard(art)));
+
   // Watchers
   const wg = document.getElementById('watchersGrid');
-  for (let i = 0; i < 10; i++) {
-    const d = document.createElement('div'); d.className = 'wav';
-    const c = document.createElement('canvas'); c.width = 80; c.height = 80;
-    window.drawWatcher(c.getContext('2d'), 80, 80, i * 17 + 3);
-    d.appendChild(c); wg.appendChild(d);
-  }
+  WATCHERS.forEach((w, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'wav';
+    const cv = document.createElement('canvas');
+    cv.width = 40; cv.height = 40;
+    drawOn(cv, window.drawWatcher, i * 137 + w.hue);
+    wrap.appendChild(cv);
+    wg.appendChild(wrap);
+  });
+
   // Groups
   const gr = document.getElementById('grpRow');
-  GROUPS.forEach(grp => {
-    const d = document.createElement('div'); d.className = 'grp-item';
-    const ico = document.createElement('div'); ico.className = 'grp-ico';
-    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
-    window.drawGroupIcon(c.getContext('2d'), 64, 64, grp.hue);
-    ico.appendChild(c);
-    const info = document.createElement('div');
-    info.innerHTML = `<div class="grp-name">${grp.name}</div><div class="grp-sub">${grp.members}</div>`;
-    d.appendChild(ico); d.appendChild(info); gr.appendChild(d);
+  GROUPS.forEach((g, i) => {
+    const item = document.createElement('div');
+    item.className = 'grp-item';
+    const cv = document.createElement('canvas');
+    cv.width = 36; cv.height = 36;
+    drawOn(cv, window.drawGroupIcon, g.hue);
+    item.innerHTML = `
+      <div class="grp-ico"></div>
+      <div>
+        <div class="grp-name">${g.name}</div>
+        <div class="grp-sub">${g.members}</div>
+      </div>`;
+    item.querySelector('.grp-ico').appendChild(cv);
+    gr.appendChild(item);
   });
 });

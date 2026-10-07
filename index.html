@@ -2,150 +2,284 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ArtCanvas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArtCanvas — Share Your Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <a class="logo" href="#">
-      <div class="logo-icon">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M7 1L13 4.5V10L7 13L1 10V4.5L7 1Z" fill="white"/>
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="logo" href="#">
+    <span class="logo-icon">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/>
+        <polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/>
+        <polygon points="6,12.5 14,12.5 15,15 5,15" fill="#06070d" opacity=".6"/>
+        <polygon points="6,12.5 14,12.5 15,15 5,15" fill="#05c26b" opacity=".5"/>
+      </svg>
+    </span>
+    <span class="logo-text">Art<em>Canvas</em></span>
+  </a>
+
+  <div class="srch">
+    <span class="srch-ico">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </span>
+    <input type="search" placeholder="Search art, artists, groups…">
+  </div>
+
+  <div class="nav-links">
+    <button class="nbtn">Browse</button>
+    <button class="nbtn">Watch</button>
+    <button class="nbtn">Commissions</button>
+    <button class="nbtn">Shop</button>
+  </div>
+
+  <div class="nav-r">
+    <button class="btn-submit">Submit</button>
+
+    <button class="nav-icon-btn" title="Messages">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+
+    <button class="nav-icon-btn" title="Notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="notif-dot"></span>
+    </button>
+
+    <div class="nav-av" title="Your profile">
+      <canvas id="navAv" width="36" height="36"></canvas>
+    </div>
+  </div>
+</nav>
+
+<!-- ── BANNER ────────────────────────────────────────────────── -->
+<div class="banner">
+  <canvas id="bannerC" width="1400" height="280"></canvas>
+</div>
+
+<!-- ── PROFILE HEADER ────────────────────────────────────────── -->
+<div class="ph">
+  <div class="ph-inner">
+    <div class="pav-wrap">
+      <div class="pav">
+        <canvas id="profileAv" width="104" height="104"></canvas>
+      </div>
+    </div>
+
+    <div class="pinfo">
+      <div class="pname">NebulaForge</div>
+      <div class="ptag">Digital artist · Sci-Fi · Fantasy · 3D Illustration</div>
+      <div class="pstats">
+        <div class="pstat">
+          <div class="psv">142</div>
+          <div class="psl">Deviations</div>
+        </div>
+        <div class="pstat">
+          <div class="psv">8.4K</div>
+          <div class="psl">Watchers</div>
+        </div>
+        <div class="pstat">
+          <div class="psv">312</div>
+          <div class="psl">Following</div>
+        </div>
+        <div class="pstat">
+          <div class="psv">2.1K</div>
+          <div class="psl">Favourites</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pact">
+      <button class="btn-watch">Watch</button>
+      <button class="btn-more">&#x22EF;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TABS ──────────────────────────────────────────────────── -->
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tbtn active" data-tab="gallery">Gallery</button>
+    <button class="tbtn" data-tab="favs">Favourites</button>
+    <button class="tbtn" data-tab="about">About</button>
+    <button class="tbtn" data-tab="comments">Comments</button>
+  </div>
+</div>
+
+<!-- ── MAIN LAYOUT ───────────────────────────────────────────── -->
+<div class="layout">
+  <div class="main">
+
+    <!-- Gallery tab -->
+    <div class="tab-panel active" id="tab-gallery">
+      <div class="g-grid" id="galleryGrid"></div>
+    </div>
+
+    <!-- Favourites tab -->
+    <div class="tab-panel" id="tab-favs">
+      <div class="g-grid" id="favsGrid"></div>
+    </div>
+
+    <!-- About tab -->
+    <div class="tab-panel" id="tab-about">
+      <div class="about-box">
+        <p class="about-bio">
+          Digital artist specializing in sci-fi environments and fantasy character illustration.
+          I explore the intersection of organic shapes and technological aesthetics — building worlds
+          that feel both alien and strangely familiar. Every piece starts with a question: what
+          would this place feel like to stand in?
+        </p>
+
+        <div class="about-sh">Tools</div>
+        <div class="pill-row">
+          <span class="pill">Clip Studio Paint</span>
+          <span class="pill">Photoshop</span>
+          <span class="pill">Procreate</span>
+          <span class="pill">Blender</span>
+          <span class="pill">DaVinci Resolve</span>
+        </div>
+
+        <div class="about-sh">Interests</div>
+        <div class="pill-row">
+          <span class="pill">Sci-Fi</span>
+          <span class="pill">Fantasy</span>
+          <span class="pill">Concept Art</span>
+          <span class="pill">World-Building</span>
+          <span class="pill">3D Sculpting</span>
+          <span class="pill">Animation</span>
+        </div>
+
+        <div class="about-sh">Commission Status</div>
+        <div class="pill-row">
+          <span class="pill" style="color:var(--acc);border-color:var(--acc);background:rgba(5,194,107,.08)">Open for Commissions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments tab -->
+    <div class="tab-panel" id="tab-comments">
+      <div class="empty-box">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="empty-title">No comments yet</div>
+        <div class="empty-sub">Be the first to leave a comment on this profile</div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+
+  <!-- ── SIDEBAR ───────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <!-- Featured Deviation -->
+    <div class="sc">
+      <div class="sc-hd">Featured Deviation</div>
+      <div class="feat-thumb">
+        <canvas id="featCanvas" width="480" height="360"></canvas>
+        <div class="feat-thumb-ov">
+          <div class="feat-play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="feat-title">Void Walker — Into the Deep</div>
+      <div class="feat-meta">
+        <span class="feat-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          14.2K
+        </span>
+        <span class="feat-stat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          923
+        </span>
+        <button class="feat-fav-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          Fave
+        </button>
+      </div>
+    </div>
+
+    <!-- Watchers -->
+    <div class="sc">
+      <div class="sc-hd">Watchers <span class="sc-hd-count">8.4K</span></div>
+      <div class="wgrid" id="watchersGrid"></div>
+    </div>
+
+    <!-- Tags -->
+    <div class="sc">
+      <div class="sc-hd">Tags</div>
+      <div class="tag-cloud">
+        <span class="tchip">#digitalart</span>
+        <span class="tchip">#scifi</span>
+        <span class="tchip">#fantasy</span>
+        <span class="tchip">#concept</span>
+        <span class="tchip">#space</span>
+        <span class="tchip">#illustration</span>
+        <span class="tchip">#character</span>
+        <span class="tchip">#3D</span>
+        <span class="tchip">#environment</span>
+        <span class="tchip">#neon</span>
+      </div>
+    </div>
+
+    <!-- Groups -->
+    <div class="sc">
+      <div class="sc-hd">Groups</div>
+      <div class="grp-row" id="grpRow"></div>
+    </div>
+
+  </aside>
+</div><!-- /layout -->
+
+<!-- ── FOOTER ────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="footer-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/>
+          <polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/>
         </svg>
-      </div>
-      <span class="logo-text">Art<em>Canvas</em></span>
-    </a>
-    <div class="srch">
-      <span class="srch-ico">⌕</span>
-      <input type="text" placeholder="Search artists, deviations, and more…">
+      </span>
+      <span class="footer-logo-text">Art<em>Canvas</em></span>
     </div>
-    <div class="nav-links">
-      <button class="nbtn">Browse</button>
-      <button class="nbtn">Watch</button>
-      <button class="nbtn">Commissions</button>
-      <button class="nbtn">Shop</button>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Careers</a>
+      <a href="#">Press</a>
+      <a href="#">Blog</a>
+      <a href="#">Help</a>
+      <a href="#">Developers</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
     </div>
-    <div class="nav-r">
-      <button class="btn-submit">+ Submit</button>
-      <button class="nav-ico">🔔</button>
-      <div class="nav-av"><canvas id="navAv" width="68" height="68"></canvas></div>
-    </div>
-  </nav>
-
-  <!-- BANNER -->
-  <div class="banner"><canvas id="bannerC" width="1200" height="280"></canvas></div>
-
-  <!-- PROFILE HEADER -->
-  <div class="ph">
-    <div class="ph-inner">
-      <div class="pav"><canvas id="profAv" width="176" height="176"></canvas></div>
-      <div class="pinfo">
-        <h1 class="pname">YourUsername</h1>
-        <p class="ptag">Digital artist · Character design · Dark fantasy · Concept art</p>
-        <div class="pstats">
-          <div class="pstat"><div class="psv">142</div><div class="psl">Deviations</div></div>
-          <div class="pstat"><div class="psv">8.4K</div><div class="psl">Watchers</div></div>
-          <div class="pstat"><div class="psv">312</div><div class="psl">Following</div></div>
-          <div class="pstat"><div class="psv">2.1K</div><div class="psl">Favourites</div></div>
-        </div>
-      </div>
-      <div class="pact">
-        <button class="btn-watch">Watch</button>
-        <button class="btn-sec">⋯</button>
-      </div>
-    </div>
+    <div class="footer-copy">&copy; 2026 ArtCanvas. All rights reserved.</div>
   </div>
+</footer>
 
-  <!-- TABS -->
-  <div class="tabs-bar">
-    <div class="tabs-inner">
-      <button class="tbtn active" data-tab="gallery">Gallery</button>
-      <button class="tbtn" data-tab="favourites">Favourites</button>
-      <button class="tbtn" data-tab="about">About</button>
-      <button class="tbtn" data-tab="comments">Comments</button>
-    </div>
-  </div>
-
-  <!-- MAIN -->
-  <div class="layout">
-    <main>
-      <div id="panel-gallery" class="tab-panel active">
-        <div class="sec-hd">All Deviations · 142</div>
-        <div class="g-grid" id="galleryGrid"></div>
-      </div>
-      <div id="panel-favourites" class="tab-panel">
-        <div class="sec-hd">Favourites · 2,104</div>
-        <div class="g-grid" id="favsGrid"></div>
-      </div>
-      <div id="panel-about" class="tab-panel">
-        <div class="about-box">
-          <p class="about-bio">Hi! I'm a digital artist and character designer working in dark fantasy, sci-fi, and original characters. I've been drawing since childhood and went fully digital in 2018. Currently building an original universe — more coming soon.</p>
-          <p class="about-bio">Commission status: <strong style="color:var(--acc)">OPEN</strong> — DM for details.</p>
-          <div class="about-sh">Tools</div>
-          <div class="pill-row">
-            <span class="pill">Clip Studio Paint</span>
-            <span class="pill">Photoshop</span>
-            <span class="pill">Procreate</span>
-            <span class="pill">Blender</span>
-          </div>
-          <div class="about-sh">Interests</div>
-          <div class="pill-row">
-            <span class="pill">Fantasy</span>
-            <span class="pill">Sci-Fi</span>
-            <span class="pill">Character Design</span>
-            <span class="pill">Worldbuilding</span>
-            <span class="pill">Dark Art</span>
-            <span class="pill">Mythology</span>
-            <span class="pill">Anime</span>
-          </div>
-        </div>
-      </div>
-      <div id="panel-comments" class="tab-panel">
-        <div class="empty-box">
-          <div class="empty-icon">💬</div>
-          <div class="empty-title">No comments yet</div>
-          <div class="empty-sub">Be the first to leave a comment!</div>
-        </div>
-      </div>
-    </main>
-    <aside class="sidebar">
-      <div class="sc">
-        <div class="sc-hd">Featured Deviation</div>
-        <div class="feat-thumb"><canvas id="featC" width="480" height="360"></canvas></div>
-        <div class="feat-title">Void Walker</div>
-        <div class="feat-meta">23,847 views · 1,204 favourites</div>
-      </div>
-      <div class="sc">
-        <div class="sc-hd">Watchers <span style="color:var(--fg3);font-weight:400">8,421</span></div>
-        <div class="wgrid" id="watchersGrid"></div>
-      </div>
-      <div class="sc">
-        <div class="sc-hd">Tags</div>
-        <div class="tag-cloud">
-          <span class="tchip">digitalart</span>
-          <span class="tchip">characterdesign</span>
-          <span class="tchip">fantasy</span>
-          <span class="tchip">scifi</span>
-          <span class="tchip">oc</span>
-          <span class="tchip">darkfantasy</span>
-          <span class="tchip">originalcharacter</span>
-          <span class="tchip">conceptart</span>
-          <span class="tchip">anime</span>
-          <span class="tchip">illustration</span>
-        </div>
-      </div>
-      <div class="sc">
-        <div class="sc-hd">Groups</div>
-        <div class="grp-row" id="grpRow"></div>
-      </div>
-    </aside>
-  </div>
-
-  <script src="js/art.js"></script>
-  <script src="js/main.js"></script>
+<script src="js/art.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
