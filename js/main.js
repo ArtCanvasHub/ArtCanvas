@@ -284,6 +284,49 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── Replace "Latest Deviations" empty state with demo works ─── */
+  if (window.AC_WORKS && window.AC_WORKS.length > 0) {
+    const latestHd = [...document.querySelectorAll('.sec-hd-label')].find(el => el.textContent.trim() === 'Latest Deviations');
+    if (latestHd) {
+      const sec = latestHd.closest('.sec');
+      const emptyEl = sec && sec.querySelector('.empty-banner');
+      if (emptyEl) {
+        const scroll = document.createElement('div');
+        scroll.className = 'hscroll';
+        const recentWorks = [...window.AC_WORKS].sort((a, b) => b.id - a.id).slice(0, 10);
+        recentWorks.forEach(work => {
+          const fn = window.DRAW_FNS[work.style] || window.DRAW_FNS.space;
+          const card = document.createElement('div');
+          card.className = 'hscroll-card';
+          const cv = document.createElement('canvas');
+          cv.width = 160; cv.height = 213;
+          drawOn(cv, fn);
+          card.appendChild(cv);
+          const ov = document.createElement('div');
+          ov.className = 'hscroll-card-ov';
+          ov.innerHTML = `<div class="hscroll-card-ov-title">${work.title}</div>`;
+          card.appendChild(ov);
+          card.addEventListener('click', () => window.AC?.openWork(work.id));
+          scroll.appendChild(card);
+        });
+        emptyEl.replaceWith(scroll);
+        const hdRow = sec.querySelector('.sec-hd-row');
+        if (hdRow && !hdRow.querySelector('.sec-see-all')) {
+          const sa = document.createElement('a');
+          sa.className = 'sec-see-all'; sa.href = 'browse.html'; sa.textContent = 'Browse All';
+          hdRow.appendChild(sa);
+        }
+      }
+    }
+
+    /* Hide Spotlight empty state — only show when user has pinned work */
+    const spotlightSec = [...document.querySelectorAll('.sec-hd-label')].find(el => el.textContent.trim() === 'Spotlight');
+    if (spotlightSec) {
+      const sec = spotlightSec.closest('.sec');
+      if (sec && sec.querySelector('.spotlight-empty')) sec.style.display = 'none';
+    }
+  }
+
   /* ── Populate Liked tab with recent works ─── */
   const likedPanel = document.getElementById('tab-favourites');
   if (likedPanel && window.AC_WORKS && window.AC_WORKS.length > 0) {

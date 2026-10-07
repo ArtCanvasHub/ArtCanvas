@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const artist = window.AC.getArtist(work.artistId);
         const fn = window.DRAW_FNS[work.style] || window.DRAW_FNS.space;
         const cv = document.createElement('canvas');
-        cv.width = 160; cv.height = 213;
+        cv.width = 200; cv.height = 130;
         drawOn(cv, fn);
         card.appendChild(cv);
         const ov = document.createElement('div');
