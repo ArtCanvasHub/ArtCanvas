@@ -40,8 +40,7 @@ img, canvas, svg { display: block; }
   display: flex; align-items: center; padding: 0 16px; gap: 10px; z-index: 300;
 }
 .logo { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-.logo-icon { width: 26px; height: 26px; background: var(--acc); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
-.logo-icon svg { width: 15px; height: 15px; }
+.logo-icon { width: 28px; height: 28px; border-radius: 7px; display: block; flex-shrink: 0; }
 .logo-text { font-size: 16px; font-weight: 800; color: var(--fg); letter-spacing: -.4px; }
 .logo-text em { color: var(--acc); font-style: normal; }
 .nav-shop { background: none; border: none; color: var(--fg2); font-size: 13px; font-weight: 500; padding: 0 10px; cursor: pointer; }
