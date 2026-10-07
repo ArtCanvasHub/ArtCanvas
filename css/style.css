@@ -240,6 +240,29 @@ img, canvas, svg { display: block; }
 .empty-icon svg { width: 22px; height: 22px; color: var(--fg3); }
 .empty-title { font-size: 14px; font-weight: 700; color: var(--fg); margin-bottom: 6px; }
 .empty-sub { font-size: 13px; color: var(--fg2); }
+.empty-cta { margin-top: 18px; background: var(--acc); color: #fff; border: none; font-size: 13px; font-weight: 700; padding: 9px 20px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; transition: background .15s, transform .1s; }
+.empty-cta:hover { background: #07d476; transform: translateY(-1px); }
+
+/* ── EMPTY BANNER (hero-style empty state) ──────────── */
+.empty-banner { background: var(--surf); border: 1.5px dashed var(--brd2); border-radius: 12px; padding: 44px 28px; text-align: center; }
+.empty-banner-icon { width: 52px; height: 52px; background: var(--surf2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid var(--brd); }
+.empty-banner-icon svg { width: 24px; height: 24px; color: var(--fg3); }
+.empty-banner-title { font-size: 16px; font-weight: 800; color: var(--fg); margin-bottom: 6px; }
+.empty-banner-sub { font-size: 13px; color: var(--fg2); max-width: 360px; margin: 0 auto; line-height: 1.65; }
+.empty-banner-cta { margin-top: 20px; background: var(--acc); color: #fff; border: none; font-size: 13px; font-weight: 700; padding: 10px 22px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; transition: background .15s, transform .1s; }
+.empty-banner-cta:hover { background: #07d476; transform: translateY(-1px); }
+
+/* ── SPOTLIGHT EMPTY ─────────────────────────────────── */
+.spotlight-empty { background: var(--surf); border: 1px solid var(--brd); border-radius: 10px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.spotlight-empty-inner { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--fg2); }
+.spotlight-empty-inner svg { color: var(--fg3); flex-shrink: 0; }
+.spotlight-pin-btn { background: none; border: 1px solid var(--brd); border-radius: 16px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; color: var(--fg2); white-space: nowrap; transition: color .15s, border-color .15s; }
+.spotlight-pin-btn:hover { color: var(--acc); border-color: var(--acc); }
+
+/* ── COLLECTION ADD BTN ──────────────────────────────── */
+.collection-add-btn { flex-shrink: 0; width: 148px; height: 111px; background: var(--surf2); border: 1.5px dashed var(--brd2); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; color: var(--fg3); font-size: 12px; font-weight: 600; transition: color .15s, border-color .15s, background .15s; }
+.collection-add-btn:hover { color: var(--acc); border-color: var(--acc); background: rgba(5,194,107,.06); }
+.collection-add-btn svg { color: inherit; }
 
 /* ── FOOTER ──────────────────────────────────────────── */
 .site-footer { border-top: 1px solid var(--brd); background: var(--surf); padding: 24px 28px; margin-left: var(--lsb-w); }
