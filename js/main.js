@@ -1,4 +1,4 @@
-/* ── DATA ─────────────────────────────────────────────── */
+/* ── PROFILE PAGE ──────────────────────────────────────── */
 const GROUPS = [
   {name:'DigitalArtists', members:'142K members', hue:140},
   {name:'FantasyArt',     members:'89K members',  hue:270},
@@ -7,8 +7,8 @@ const GROUPS = [
 
 const FOLLOWERS = [0,30,60,140,200,270,330,15,90,180].map(hue => ({hue}));
 
-/* ── HELPERS ──────────────────────────────────────────── */
 function drawOn(canvas, fn, ...extra) {
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   fn(ctx, canvas.width, canvas.height, ...extra);
 }
@@ -52,23 +52,85 @@ document.addEventListener('click', e => {
 
 /* ── JOURNAL + WRITE ENTRY ────────────────────────────── */
 document.addEventListener('click', e => {
-  if (e.target.closest('.empty-cta[href]')) return; /* let <a> navigate */
+  if (e.target.closest('.empty-cta[href]')) return;
   const btn = e.target.closest('button.empty-cta:not([data-action])');
   if (btn && btn.textContent.includes('Entry')) {
     window.AC?.showToast('Journal editor coming soon!');
   }
 });
 
+/* ── SET AVATAR (img or canvas) ───────────────────────── */
+function setAvatar(el, user, size) {
+  if (!el) return;
+  if (user.picture) {
+    const img = document.createElement('img');
+    img.src = user.picture;
+    img.width = size; img.height = size;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit';
+    img.onerror = () => drawOn(el.tagName === 'CANVAS' ? el : el.querySelector('canvas'), window.drawAvatar);
+    if (el.tagName === 'CANVAS') {
+      el.parentNode.replaceChild(img, el);
+    } else {
+      el.innerHTML = '';
+      el.appendChild(img);
+    }
+  } else {
+    const cv = el.tagName === 'CANVAS' ? el : el.querySelector('canvas');
+    if (cv) drawOn(cv, window.drawAvatar);
+  }
+}
+
 /* ── INIT ─────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  /* Nav + profile avatars */
-  drawOn(document.getElementById('navAv'), window.drawAvatar);
-  drawOn(document.getElementById('profileAv'), window.drawAvatar);
+  /* Auth check — redirects to login.html if not signed in */
+  const user = window.AC_AUTH?.requireAuth();
+  if (!user) return;
 
-  /* Hero banner */
+  /* ── Hero banner ──────────────────────────────── */
   drawOn(document.getElementById('bannerC'), window.drawBanner);
 
-  /* Followers grid */
+  /* ── Populate profile from Google user data ─── */
+  const heroName    = document.getElementById('heroName');
+  const heroHandle  = document.getElementById('heroHandle');
+  const heroTag     = document.getElementById('heroTag');
+  const heroMember  = document.getElementById('heroMember');
+  const aboutHd     = document.getElementById('aboutCardHd');
+  const aboutBio    = document.getElementById('aboutBio');
+  const aboutFullBio = document.getElementById('aboutFullBio');
+  const aboutJoin   = document.getElementById('aboutJoinDate');
+  const aboutDetailJoin = document.getElementById('aboutDetailJoin');
+  const aboutDetailEmail = document.getElementById('aboutDetailEmail');
+
+  const firstName = user.given_name || user.name.split(' ')[0];
+  const joinDate  = new Date().toLocaleDateString('en-US', {month:'long', year:'numeric'});
+
+  if (heroName)   heroName.textContent = user.name;
+  if (heroHandle) heroHandle.innerHTML = `${user.name} <span class="hero-badge">✦</span>`;
+  if (heroTag)    heroTag.textContent  = user.email ? user.email.split('@')[0] + ' on ArtCanvas' : 'New member on ArtCanvas';
+  if (heroMember) heroMember.textContent = '✦ New member';
+  if (aboutHd)    aboutHd.textContent = `About ${firstName}`;
+  if (aboutBio)   aboutBio.textContent = `Welcome to ArtCanvas, ${firstName}! Upload your first work to get started.`;
+  if (aboutFullBio) aboutFullBio.textContent = `Hi, I'm ${user.name}. I just joined ArtCanvas and I'm excited to share my art with the community!`;
+  if (aboutJoin)   aboutJoin.textContent = joinDate;
+  if (aboutDetailJoin) aboutDetailJoin.textContent = `Member since ${joinDate}`;
+  if (aboutDetailEmail) aboutDetailEmail.textContent = user.isDemo ? 'Demo account' : user.email;
+
+  /* ── Avatars ────────────────────────────────── */
+  setAvatar(document.getElementById('profileAv'), user, 64);
+
+  /* Nav avatar */
+  const navAvEl = document.getElementById('navAv');
+  if (user.picture && navAvEl) {
+    const img = document.createElement('img');
+    img.src = user.picture;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+    img.onerror = () => drawOn(navAvEl, window.drawAvatar);
+    navAvEl.parentNode.replaceChild(img, navAvEl);
+  } else if (navAvEl) {
+    drawOn(navAvEl, window.drawAvatar);
+  }
+
+  /* ── Followers grid ─────────────────────────── */
   const wg = document.getElementById('followersGrid');
   if (wg) {
     FOLLOWERS.forEach((w, i) => {
@@ -82,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Groups */
+  /* ── Groups ─────────────────────────────────── */
   const gr = document.getElementById('grpRow');
   if (gr) {
     GROUPS.forEach(g => {
@@ -102,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Empty collection row placeholder tiles */
+  /* ── Collection row ─────────────────────────── */
   const collectionRow = document.getElementById('collectionRow');
   if (collectionRow) {
     const addCollBtn = document.createElement('button');
@@ -112,20 +174,5 @@ document.addEventListener('DOMContentLoaded', () => {
       New Collection
     `;
     collectionRow.appendChild(addCollBtn);
-  }
-
-  /* Discover grid — show community art on profile home tab */
-  const discoverGrid = document.getElementById('discoverGrid');
-  if (discoverGrid && window.AC_WORKS && window.AC) {
-    const works = window.AC_WORKS.slice(0, 9);
-    const queue = works.map(w => w.id);
-    works.forEach(work => {
-      const card = window.AC.makeArtCard(work);
-      card.addEventListener('click', e => {
-        if (e.target.closest('.art-like-btn')) return;
-        window.AC.openWork(work.id, queue);
-      }, true);
-      discoverGrid.appendChild(card);
-    });
   }
 });

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in — ArtCanvas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-body">
+
+<!--
+  GOOGLE SIGN-IN SETUP:
+  1. Go to console.cloud.google.com
+  2. Create a project → APIs & Services → Credentials → OAuth 2.0 Client ID
+  3. Under "Authorized JavaScript origins" add your domain (e.g. https://artcanvas-nrbi.onrender.com and http://localhost:5503)
+  4. Replace YOUR_GOOGLE_CLIENT_ID below with your real Client ID (ends in .apps.googleusercontent.com)
+-->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<div class="login-page">
+
+  <!-- ── LEFT: ART SHOWCASE ── -->
+  <div class="login-art-side">
+    <div class="login-art-grid" id="loginArtGrid"></div>
+    <div class="login-art-ov">
+      <div class="login-art-logo">
+        <svg viewBox="0 0 20 20" fill="none" width="22" height="22"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
+        ArtCanvas
+      </div>
+      <div class="login-art-quote">Where every artist<br>finds their audience.</div>
+      <div class="login-art-stats">
+        <div class="login-art-stat"><span class="las-num">10K+</span><span class="las-label">Artists</span></div>
+        <div class="login-art-stat"><span class="las-num">50K+</span><span class="las-label">Works</span></div>
+        <div class="login-art-stat"><span class="las-num">Free</span><span class="las-label">Always</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: LOGIN PANEL ── -->
+  <div class="login-panel-side">
+    <div class="login-panel">
+
+      <a class="logo login-panel-logo" href="login.html">
+        <span class="logo-icon">
+          <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
+        </span>
+        <span class="logo-text">Art<em>Canvas</em></span>
+      </a>
+
+      <h1 class="login-hd">Welcome to ArtCanvas</h1>
+      <p class="login-sub">Sign in to share your art, follow artists, and build your portfolio.</p>
+
+      <!-- Google Identity Services button renders here -->
+      <div class="login-google-wrap">
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleGoogleLogin"
+             data-auto_select="false">
+        </div>
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="filled_black"
+             data-text="sign_in_with"
+             data-size="large"
+             data-width="320"
+             data-logo_alignment="left">
+        </div>
+        <!-- Shown if Google button fails to render (invalid/missing client ID) -->
+        <div class="login-google-fallback" id="loginGoogleFallback" style="display:none">
+          <p class="login-google-note">
+            Google Sign-In requires a Client ID.<br>
+            See the comment at the top of <code>login.html</code> to set one up.
+          </p>
+        </div>
+      </div>
+
+      <div class="login-or"><span>or</span></div>
+
+      <button class="login-demo-btn" id="loginDemoBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        Continue as Demo User
+      </button>
+
+      <p id="loginError" class="login-error" style="display:none">Sign-in failed. Please try again.</p>
+
+      <p class="login-terms">
+        By signing in you agree to our
+        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/art.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  /* Redirect immediately if already signed in */
+  (function () {
+    if (window.AC_AUTH && window.AC_AUTH.getUser()) {
+      location.replace('index.html');
+    }
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    /* Render procedural art tiles on left panel */
+    const grid = document.getElementById('loginArtGrid');
+    const fns  = Object.values(window.DRAW_FNS || {});
+    if (fns.length && grid) {
+      for (let i = 0; i < 6; i++) {
+        const cv  = document.createElement('canvas');
+        cv.width  = 380;
+        cv.height = 480;
+        const ctx = cv.getContext('2d');
+        fns[i % fns.length](ctx, 380, 480);
+        grid.appendChild(cv);
+      }
+    }
+
+    /* Demo login button */
+    document.getElementById('loginDemoBtn').addEventListener('click', () => {
+      window.AC_AUTH.loginAsDemo();
+    });
+
+    /* Detect if Google button rendered (only works if GIS loaded with valid client ID) */
+    setTimeout(() => {
+      const gFrame = document.querySelector('.g_id_signin iframe');
+      if (!gFrame) {
+        document.getElementById('loginGoogleFallback').style.display = 'block';
+      }
+    }, 2500);
+  });
+</script>
+</body>
+</html>

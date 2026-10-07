@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NebulaForge on ArtCanvas</title>
+  <title>My Profile — ArtCanvas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -95,31 +95,29 @@
     <div class="hero-banner">
       <canvas id="bannerC" width="1400" height="290"></canvas>
       <div class="hero-ov">
-        <div class="hero-av">
+        <div class="hero-av" id="heroAvWrap">
           <canvas id="profileAv" width="64" height="64"></canvas>
         </div>
         <div class="hero-text">
-          <div class="hero-name">NebulaForge</div>
-          <div class="hero-handle">
-            NebulaForge
+          <div class="hero-name" id="heroName">Artist</div>
+          <div class="hero-handle" id="heroHandle">
+            Artist
             <span class="hero-badge">✦</span>
           </div>
-          <div class="hero-tag">Digital artist · Sci-Fi · Fantasy · 3D Illustration</div>
+          <div class="hero-tag" id="heroTag">New member</div>
           <div class="hero-stats">
-            <span class="hs-item">✦ Artist for 2 years</span>
+            <span class="hs-item" id="heroMember">✦ New member</span>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="followers">8.4K Followers</button>
+            <button class="hs-link" data-stat="followers" id="heroFollowers">0 Followers</button>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="following">312 Following</button>
+            <button class="hs-link" data-stat="following" id="heroFollowing">0 Following</button>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="works">142 Works</button>
+            <button class="hs-link" data-stat="works" id="heroWorks">0 Works</button>
           </div>
           <div class="hero-stats">
-            <span class="hs-item">2.1M Profile Views</span>
+            <span class="hs-item">0 Profile Views</span>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="liked">2.1K Liked</button>
-            <span class="hs-dot">·</span>
-            <span class="hs-item">3 Groups</span>
+            <button class="hs-link" data-stat="liked">0 Liked</button>
           </div>
         </div>
       </div>
@@ -192,50 +190,32 @@
             </div>
           </div>
 
-          <!-- Discover from the community -->
-          <div class="sec">
-            <div class="sec-hd-row">
-              <span class="sec-hd-label">Discover</span>
-              <a class="sec-see-all" href="browse.html">See all →</a>
-            </div>
-            <div class="masonry-grid" id="discoverGrid" style="columns:3"></div>
-          </div>
-
         </div>
         <div class="home-aside">
 
           <!-- About widget -->
           <div class="about-card">
-            <div class="about-card-hd">About NebulaForge</div>
+            <div class="about-card-hd" id="aboutCardHd">About Me</div>
             <div class="about-meta-row">
               <span class="about-meta-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Jan 2024
-              </span>
-              <span class="about-meta-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                Earth
+                <span id="aboutJoinDate">Joined recently</span>
               </span>
             </div>
             <div class="about-meta-row" style="margin-top:8px">
               <span class="about-type-pill">Artist</span>
-              <span class="about-type-pill">Digital Art</span>
-              <span class="about-type-pill">3D</span>
+              <span class="about-type-pill">New Member</span>
             </div>
-            <p class="about-bio-short">Digital artist specializing in sci-fi environments and fantasy character illustration. Building worlds that feel alien yet familiar.</p>
+            <p class="about-bio-short" id="aboutBio">Welcome to ArtCanvas! Upload your first work to get started.</p>
             <div class="about-card-sh">Achievements</div>
             <div class="badges-row">
-              <span class="badge-chip" title="Active Member">⚡</span>
-              <span class="badge-chip" title="Premium">★</span>
-              <span class="badge-chip" title="Top Artist">🎨</span>
-              <span class="badge-chip" title="Community">🌐</span>
-              <span class="badge-chip" title="Featured">💎</span>
+              <span class="badge-chip" title="New Member">✦</span>
             </div>
           </div>
 
           <!-- Followers -->
           <div class="sc">
-            <div class="sc-hd">Followers <span class="sc-hd-count">8.4K</span></div>
+            <div class="sc-hd">Followers <span class="sc-hd-count" id="followersCount">0</span></div>
             <div class="wgrid" id="followersGrid"></div>
           </div>
 
@@ -357,30 +337,14 @@
           <div class="about-full-main">
             <div class="about-box">
               <div class="about-sh">Bio</div>
-              <p class="about-bio">
-                Digital artist specializing in sci-fi environments and fantasy character illustration.
-                I explore the intersection of organic shapes and technological aesthetics — building worlds
-                that feel both alien and strangely familiar. Every piece starts with a question: what
-                would this place feel like to stand in?<br><br>
-                I've been painting digitally for over a decade, starting with fantasy concept art before
-                moving into hard sci-fi environments.
-              </p>
-              <div class="about-sh" style="margin-top:24px">Tools</div>
-              <div class="pill-row">
-                <span class="pill">Clip Studio Paint</span>
-                <span class="pill">Photoshop</span>
-                <span class="pill">Procreate</span>
-                <span class="pill">Blender</span>
-                <span class="pill">DaVinci Resolve</span>
-              </div>
-              <div class="about-sh" style="margin-top:20px">Interests</div>
-              <div class="pill-row">
-                <span class="pill">Sci-Fi</span>
-                <span class="pill">Fantasy</span>
-                <span class="pill">Concept Art</span>
-                <span class="pill">World-Building</span>
-                <span class="pill">3D Sculpting</span>
-                <span class="pill">Animation</span>
+              <p class="about-bio" id="aboutFullBio">You haven't written a bio yet. Tell the community about your art, your inspirations, and what you create.</p>
+              <div class="about-sh" style="margin-top:24px">Get Started</div>
+              <p style="color:var(--fg3);font-size:13px;line-height:1.7;margin-top:8px">Upload your first work to start building your portfolio on ArtCanvas. Your art deserves an audience.</p>
+              <div style="margin-top:16px">
+                <button class="empty-cta" data-action="upload" style="display:inline-flex">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
+                  Upload Your First Work
+                </button>
               </div>
             </div>
           </div>
@@ -390,23 +354,18 @@
               <div class="detail-list">
                 <div class="detail-row">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  <span>Member since January 2024</span>
+                  <span id="aboutDetailJoin">Member since today</span>
                 </div>
                 <div class="detail-row">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <span>Earth</span>
-                </div>
-                <div class="detail-row">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                  <span>artcanvas.io/nebulaforge</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+                  <span id="aboutDetailEmail">—</span>
                 </div>
               </div>
             </div>
             <div class="sc" style="margin-top:12px">
               <div class="sc-hd">Commission Status</div>
-              <div class="comm-status open">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg>
-                Open for Commissions
+              <div class="comm-status">
+                Set up commissions after uploading your first work.
               </div>
             </div>
           </div>
@@ -434,6 +393,7 @@
   </div>
 </footer>
 
+<script src="js/auth.js"></script>
 <script src="js/art.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>

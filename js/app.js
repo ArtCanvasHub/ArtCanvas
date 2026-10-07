@@ -155,14 +155,22 @@
 
   function toggleAccountMenu(avEl) {
     if (!accountMenuEl) {
+      const user = window.AC_AUTH?.getUser() || {};
+      const userName = user.name || 'Artist';
+      const userEmail = user.isDemo ? 'Demo account' : (user.email || '');
+
       accountMenuEl = document.createElement('div');
       accountMenuEl.className = 'account-menu';
       accountMenuEl.innerHTML = `
         <div class="account-menu-profile">
-          <canvas class="account-menu-av" width="36" height="36"></canvas>
+          <div class="account-menu-av-wrap">
+            ${user.picture
+              ? `<img src="${user.picture}" width="36" height="36" style="border-radius:50%;object-fit:cover;width:36px;height:36px">`
+              : `<canvas class="account-menu-av" width="36" height="36"></canvas>`}
+          </div>
           <div>
-            <div class="account-menu-name">NebulaForge</div>
-            <div class="account-menu-sub">Free Account</div>
+            <div class="account-menu-name">${userName}</div>
+            <div class="account-menu-sub">${userEmail}</div>
           </div>
         </div>
         <div class="account-menu-div"></div>
@@ -187,11 +195,11 @@
       document.body.appendChild(accountMenuEl);
 
       const avCv = accountMenuEl.querySelector('.account-menu-av');
-      drawOn(avCv, window.drawAvatar);
+      if (avCv) drawOn(avCv, window.drawAvatar);
 
       accountMenuEl.querySelector('.account-signout').addEventListener('click', () => {
         accountMenuEl.classList.remove('open');
-        showToast('Signed out successfully');
+        window.AC_AUTH?.signOut();
       });
       document.addEventListener('click', e => {
         if (accountMenuEl.classList.contains('open') &&
@@ -420,7 +428,8 @@
     if (!text) return;
     input.value = '';
     const list = modalEl.querySelector('.wm-comments-list');
-    list.appendChild(makeCommentEl({user: 'NebulaForge', text, hue: 10}, true));
+    const me = window.AC_AUTH?.getUser();
+    list.appendChild(makeCommentEl({user: me?.name || 'Artist', text, hue: 10}, true));
     list.scrollTop = list.scrollHeight;
     modalEl.querySelectorAll('.wm-comment-count, .wm-comment-count-hd').forEach(el => {
       el.textContent = (parseInt(el.textContent, 10) || 0) + 1;
