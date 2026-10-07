@@ -46,7 +46,7 @@ function loginAsDemo() {
     given_name: 'Guest',
     isDemo:     true,
   });
-  location.href = 'browse.html';
+  location.href = 'home.html';
 }
 
 /* Called by Google Identity Services after successful sign-in */
@@ -64,7 +64,7 @@ function handleGoogleLogin(response) {
       sub:        payload.sub,
       given_name: payload.given_name || payload.name.split(' ')[0],
     });
-    location.href = 'browse.html';
+    location.href = 'home.html';
   } catch (e) {
     console.error('Google login error:', e);
     const errEl = document.getElementById('loginError');
