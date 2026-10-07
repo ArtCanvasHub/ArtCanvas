@@ -168,9 +168,6 @@ img, canvas, svg { display: block; }
 .art-card-author-name { font-size: 11px; color: rgba(255,255,255,.65); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .art-card-stat { font-size: 10.5px; color: rgba(255,255,255,.5); display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
 .art-card-stat svg { width: 10px; height: 10px; }
-.art-card-caption { padding: 6px 8px 8px; background: var(--surf2); }
-.art-card-caption-title { font-size: 12px; font-weight: 700; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.art-card-caption-author { font-size: 11px; color: var(--fg3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* ── MASONRY GRID ────────────────────────────────────── */
 .masonry-grid { columns: 4; column-gap: 6px; }

@@ -717,18 +717,6 @@
     ov.appendChild(btm);
     card.appendChild(ov);
 
-    const caption = document.createElement('div');
-    caption.className = 'art-card-caption';
-    const captionTitle = document.createElement('div');
-    captionTitle.className = 'art-card-caption-title';
-    captionTitle.textContent = work.title;
-    const captionAuthor = document.createElement('div');
-    captionAuthor.className = 'art-card-caption-author';
-    captionAuthor.textContent = artist.name;
-    caption.appendChild(captionTitle);
-    caption.appendChild(captionAuthor);
-    card.appendChild(caption);
-
     card.addEventListener('click', e => {
       if (e.target.closest('.art-like-btn') || e.target.closest('.art-card-author-name')) return;
       window.AC.openWork(work.id);
