@@ -61,7 +61,8 @@ function handleGoogleLogin(response) {
     location.href = 'index.html';
   } catch (e) {
     console.error('Google login error:', e);
-    document.getElementById('loginError')?.classList.remove('hidden');
+    const errEl = document.getElementById('loginError');
+    if (errEl) { errEl.style.display = 'block'; }
   }
 }
 

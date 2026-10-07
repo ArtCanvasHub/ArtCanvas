@@ -59,6 +59,46 @@ document.addEventListener('click', e => {
   }
 });
 
+/* ── SPOTLIGHT PIN ────────────────────────────────────── */
+document.addEventListener('click', e => {
+  if (e.target.closest('.spotlight-pin-btn')) {
+    window.AC?.showToast('Pin feature coming soon — upload a work first!');
+  }
+});
+
+/* ── TAB ACTION BUTTONS ───────────────────────────────── */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.tab-act-btn');
+  if (!btn) return;
+  const title = btn.getAttribute('title') || '';
+  if (title.includes('More')) {
+    window.AC?.showToast('More options coming soon!');
+  } else if (title.includes('message')) {
+    window.AC?.showToast('Messages coming soon!');
+  }
+});
+
+/* ── PORTFOLIO SORT ───────────────────────────────────── */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.sort-btn');
+  if (!btn) return;
+  window.AC?.showToast('Sorting available once you upload works.');
+});
+
+/* ── NEW COLLECTION ───────────────────────────────────── */
+document.addEventListener('click', e => {
+  if (e.target.closest('.collection-add-btn')) {
+    window.AC?.showToast('Create collections after uploading your first work!');
+  }
+});
+
+/* ── NAV SEARCH (index.html) ──────────────────────────── */
+document.querySelector('.srch input')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.value.trim()) {
+    location.href = 'browse.html';
+  }
+});
+
 /* ── SET AVATAR (img or canvas) ───────────────────────── */
 function setAvatar(el, user, size) {
   if (!el) return;

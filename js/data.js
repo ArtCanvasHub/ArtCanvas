@@ -1,8 +1,95 @@
-/* ── ARTCANVAS DATA ─────────────────────────────────────
-   Artists and works are loaded dynamically from uploads.
-   These arrays start empty; content is added as users join.
-──────────────────────────────────────────────────────── */
+/* ── ARTCANVAS DEMO DATA ────────────────────────────────── */
 
-window.AC_ARTISTS  = [];
-window.AC_WORKS    = [];
-window.AC_COMMENTS = {};
+window.AC_ARTISTS = [
+  {id:1,  name:'NightVision',   tagline:'Sci-fi concept artist',              followers:'12.4K', seed:50},
+  {id:2,  name:'DragonScale',   tagline:'Fantasy illustrator & world builder', followers:'8.9K',  seed:80},
+  {id:3,  name:'PrismStudio',   tagline:'Abstract digital painter',            followers:'21.1K', seed:30},
+  {id:4,  name:'GhostBrush',    tagline:'Dark portraits & horror concepts',    followers:'6.3K',  seed:60},
+  {id:5,  name:'CosmicInk',     tagline:'Space & nebula art',                 followers:'15.7K', seed:100},
+  {id:6,  name:'IronForge',     tagline:'Mecha design & hard sci-fi',         followers:'9.2K',  seed:170},
+  {id:7,  name:'WillowMist',    tagline:'Nature & forest fantasy art',        followers:'7.8K',  seed:140},
+  {id:8,  name:'EmberCraft',    tagline:'Fire art & elemental designs',       followers:'5.1K',  seed:20},
+  {id:9,  name:'CrystalDepths', tagline:'Luminescent cave & gem art',        followers:'4.4K',  seed:200},
+  {id:10, name:'NeonPulse',     tagline:'Cyberpunk & neon city art',          followers:'18.3K', seed:260},
+];
+
+window.AC_WORKS = [
+  {id:1,  artistId:1,  title:'Nebula Born',       style:'space',    category:'sci-fi',    tags:['space','nebula','scifi','digitalart'],          likes:4821, views:'22.1K', desc:'A star system ignites from the swirling chaos of a newborn nebula. Created over 40 hours using layered light techniques.'},
+  {id:2,  artistId:5,  title:'Starfall Drift',    style:'space',    category:'sci-fi',    tags:['space','stars','cosmic','illustration'],         likes:3200, views:'18.4K', desc:'The moment before a star collapses — a meditation on scale and silence. Third piece in my Void Series.'},
+  {id:3,  artistId:6,  title:'Iron Sentinel',     style:'mecha',    category:'sci-fi',    tags:['mecha','robot','scifi','conceptart'],            likes:5612, views:'31.7K', desc:'Guardian mech unit designed for hostile terrain operations. Hexagonal armor plating distributes impact across the full exoskeleton.'},
+  {id:4,  artistId:6,  title:'Unit 7 Protocol',   style:'mecha',    category:'concept',   tags:['mecha','robot','concept','hardscifi'],           likes:2876, views:'14.2K', desc:'Combat reconnaissance unit with adaptive camouflage panels. Designed with a destroyed-city backdrop for scale reference.'},
+  {id:5,  artistId:2,  title:'Dragon of the Abyss',style:'dragon',  category:'fantasy',   tags:['dragon','fantasy','fire','epic'],                likes:7203, views:'44.8K', desc:'The Ancient of Deeps surfaces for the first time in a thousand years. My most detailed dragon work to date — six months in the making.'},
+  {id:6,  artistId:7,  title:'Moonlit Grove',     style:'forest',   category:'fantasy',   tags:['forest','nature','moon','fantasy'],              likes:2103, views:'11.3K', desc:'Bioluminescent mushrooms and fireflies light a path through the ancient pines at midnight. Inspired by Pacific Northwest rainforests.'},
+  {id:7,  artistId:9,  title:'Deep Cavern',       style:'crystal',  category:'fantasy',   tags:['crystal','cave','gems','fantasy'],               likes:1890, views:'9.7K',  desc:'A forgotten cave system beneath the mountains, its walls encrusted with crystalline formations that emit their own cold light.'},
+  {id:8,  artistId:4,  title:'The Watcher',       style:'portrait', category:'character', tags:['portrait','character','darkart','moody'],        likes:3450, views:'19.8K', desc:'She has seen things most minds could not bear. A study in controlled emotion and light geometry.'},
+  {id:9,  artistId:3,  title:'Chromatic Flow',    style:'flow',     category:'abstract',  tags:['abstract','flow','color','waves'],               likes:2780, views:'15.2K', desc:'Eight interference wave fields collide to produce emergent color patterns. Generative algorithm seeded with a specific timestamp.'},
+  {id:10, artistId:10, title:'Neon Rain',         style:'neon',     category:'dark',      tags:['neon','cyberpunk','city','rain'],                likes:6890, views:'38.5K', desc:'Midnight downpour in a district nobody names anymore. The neon reflects differently when nobody\'s watching.'},
+  {id:11, artistId:8,  title:'Ember Storm',       style:'fire',     category:'dark',      tags:['fire','dark','elemental','intense'],             likes:4100, views:'23.9K', desc:'Not destruction — transformation. Fire as the great equalizer. Part of my Elemental Fury series.'},
+  {id:12, artistId:1,  title:'Cold Horizon',      style:'space',    category:'sci-fi',    tags:['space','planet','scifi','environment'],          likes:3654, views:'20.1K', desc:'A gas giant looms over the frozen plains of its outermost moon. The ring system scatters light in ways no camera can capture.'},
+  {id:13, artistId:2,  title:'Forest Dragon',     style:'dragon',   category:'fantasy',   tags:['dragon','fantasy','forest','green'],             likes:4890, views:'28.3K', desc:'The guardian of the old growth canopy. She is older than the oldest tree and will outlast the last.'},
+  {id:14, artistId:5,  title:'Galactic Bloom',    style:'space',    category:'sci-fi',    tags:['space','galaxy','cosmic','art'],                 likes:2890, views:'16.7K', desc:'A galaxy in the early stages of formation — arms of dust and hot gas spiraling outward over millions of years.'},
+  {id:15, artistId:3,  title:'Wavelength',        style:'flow',     category:'abstract',  tags:['abstract','wave','frequency','color'],           likes:1980, views:'11.1K', desc:'Color as vibration. Each hue occupies its own frequency band in this interference study.'},
+  {id:16, artistId:10, title:'Midnight Circuit',  style:'neon',     category:'dark',      tags:['neon','cyberpunk','dark','circuit'],             likes:5230, views:'29.4K', desc:'The city never sleeps — it just changes channels. A look inside the infrastructure layer most citizens never see.'},
+  {id:17, artistId:7,  title:'Ancient Pines',     style:'forest',   category:'fantasy',   tags:['forest','pines','night','atmosphere'],          likes:1760, views:'10.2K', desc:'Thousand-year-old pines stand silent in the blue hour. An homage to the forests I grew up in.'},
+  {id:18, artistId:9,  title:'Crystal Lattice',   style:'crystal',  category:'fantasy',   tags:['crystal','geometry','fantasy','light'],          likes:2340, views:'13.5K', desc:'Perfect geometric crystal formations growing from a fractured cave floor. The lattice refracts every color of the spectrum.'},
+  {id:19, artistId:4,  title:'Shadow Self',       style:'portrait', category:'character', tags:['portrait','dark','character','shadow'],          likes:4120, views:'24.7K', desc:'We all carry a version of ourselves we don\'t show the world. This is mine. Warm light front, cold truth behind.'},
+  {id:20, artistId:6,  title:'Colossus Rising',   style:'mecha',    category:'concept',   tags:['mecha','giant','concept','scifi'],               likes:3780, views:'21.3K', desc:'A titan-class siege unit activating for the first time in decades. The scale is achieved through layered destroyed architecture.'},
+  {id:21, artistId:8,  title:'Phoenix Hour',      style:'fire',     category:'dark',      tags:['fire','phoenix','rebirth','dark'],               likes:3290, views:'18.8K', desc:'Every ending carries its next beginning inside it. Fire as metaphor. Fire as fact.'},
+  {id:22, artistId:1,  title:'Void Station',      style:'mecha',    category:'sci-fi',    tags:['mecha','scifi','station','space'],               likes:2450, views:'14.1K', desc:'Deep space relay platform, designed for 200-year unmanned operation in interstellar conditions. Nothing human remains.'},
+  {id:23, artistId:2,  title:'Serpent King',      style:'dragon',   category:'fantasy',   tags:['dragon','serpent','fantasy','gold'],             likes:6120, views:'35.6K', desc:'Ancient sea serpent surfaces in the harbor at dawn, barnacles and coral encrusting scales the size of city blocks.'},
+  {id:24, artistId:5,  title:'Aurora Reach',      style:'space',    category:'sci-fi',    tags:['space','aurora','scifi','atmosphere'],           likes:3340, views:'19.2K', desc:'Atmospheric ionization creates impossible colors in the upper stratosphere. Based on observations from a polar research station.'},
+  {id:25, artistId:3,  title:'Frequency',         style:'flow',     category:'abstract',  tags:['abstract','frequency','pattern','color'],        likes:2100, views:'12.4K', desc:'Signal theory as visual art. Where waveforms intersect, new information emerges from the noise.'},
+  {id:26, artistId:10, title:'Neon District',     style:'neon',     category:'dark',      tags:['neon','city','cyberpunk','rain'],                likes:4780, views:'27.1K', desc:'Block 7, sector unknown. Every surface a screen, every screen a lie. Welcome to the District.'},
+  {id:27, artistId:7,  title:'Lantern Wood',      style:'forest',   category:'fantasy',   tags:['forest','lantern','fairytale','glow'],           likes:1540, views:'9.1K',  desc:'Lost travelers follow the lantern lights deeper into the wood. They never wonder who lit them.'},
+  {id:28, artistId:9,  title:'Gem Heart',         style:'crystal',  category:'fantasy',   tags:['crystal','gem','heart','fantasy'],               likes:1780, views:'10.5K', desc:'A formation so perfectly symmetrical it could only be grown, not carved. Found in a cave system untouched for millennia.'},
+  {id:29, artistId:4,  title:'Fracture Line',     style:'portrait', category:'character', tags:['portrait','character','cracks','dark'],          likes:2890, views:'16.9K', desc:'The places we break are where the light gets in. Or out. Depends on the day.'},
+  {id:30, artistId:8,  title:'Inferno Core',      style:'fire',     category:'dark',      tags:['fire','inferno','dark','intense'],               likes:2760, views:'16.3K', desc:'The center of a fire column reaches temperatures that melt stone. Everything here is truth and nothing else.'},
+  {id:31, artistId:6,  title:'Mech Division',     style:'mecha',    category:'concept',   tags:['mecha','division','military','concept'],         likes:2120, views:'12.8K', desc:'Three-unit tactical formation designed for urban pacification. The shoulder mounts track independently for overlapping fields of fire.'},
+  {id:32, artistId:2,  title:'Elder Flame',       style:'dragon',   category:'fantasy',   tags:['dragon','fire','elder','fantasy'],               likes:5430, views:'31.2K', desc:'The eldest of the fire kin has forgotten more wars than humans have ever fought. Her breath is a geological event.'},
+  {id:33, artistId:1,  title:'Signal Lost',       style:'neon',     category:'sci-fi',    tags:['neon','scifi','signal','dark'],                  likes:3010, views:'17.6K', desc:'Communication array in a city that stopped answering. The signs still flash their old messages to an empty street.'},
+  {id:34, artistId:5,  title:'Gravity Well',      style:'space',    category:'sci-fi',    tags:['space','gravity','blackhole','scifi'],           likes:2540, views:'14.8K', desc:'Light bending around a stellar-mass object. Not a black hole — something stranger. My best work on gravitational lensing effects.'},
+  {id:35, artistId:3,  title:'Resonance',         style:'flow',     category:'abstract',  tags:['abstract','resonance','wave','harmony'],         likes:1850, views:'10.9K', desc:'Two frequencies, perfectly matched, amplifying each other into a pattern larger than either could achieve alone.'},
+  {id:36, artistId:4,  title:'The Observer',      style:'portrait', category:'character', tags:['portrait','observer','character','gaze'],        likes:3220, views:'18.3K', desc:'She has watched every empire rise and every empire end. She is tired of watching. Something is about to change.'},
+];
+
+window.AC_COMMENTS = {
+  5: [
+    {user:'PrismStudio',   text:'Absolutely breathtaking. The scale of those wings is insane.',          hue:30},
+    {user:'NightVision',   text:'Easily one of the best dragon pieces I have seen this year.',           hue:50},
+    {user:'CosmicInk',     text:'The fire breath coloring is perfect — love the purple tones.',         hue:100},
+    {user:'EmberCraft',    text:'Six months? It shows. Every detail is intentional.',                   hue:20},
+  ],
+  3: [
+    {user:'CosmicInk',     text:'The hexagonal armor panels are a brilliant design choice.',            hue:100},
+    {user:'GhostBrush',    text:'That glowing eye in the dark background is haunting.',                 hue:60},
+    {user:'WillowMist',    text:'IronForge always delivers on the hard surface details.',               hue:140},
+  ],
+  10: [
+    {user:'DragonScale',   text:'The neon reflections on the wet street are absolutely perfect.',       hue:80},
+    {user:'WillowMist',    text:'Cyberpunk dreams. I want to live in this city.',                       hue:140},
+    {user:'GhostBrush',    text:'The color palette is immaculate. Cool and warm neon balanced just right.', hue:60},
+    {user:'NightVision',   text:'How do you get those rain streaks so convincing in digital?',          hue:50},
+  ],
+  23: [
+    {user:'EmberCraft',    text:'The barnacle and coral detail on those scales is incredible.',         hue:20},
+    {user:'NeonPulse',     text:'DragonScale never misses. This one\'s going in my saved collection.', hue:260},
+    {user:'PrismStudio',   text:'The dawn lighting on the harbor is doing so much work here.',         hue:30},
+  ],
+  9: [
+    {user:'NightVision',   text:'The color mathematics here are extraordinary.',                        hue:50},
+    {user:'IronForge',     text:'I love when you can feel the algorithm underneath the art.',           hue:170},
+  ],
+  19: [
+    {user:'CosmicInk',     text:'The split lighting trick you use always hits different.',              hue:100},
+    {user:'NeonPulse',     text:'The detail in the eyes tells the whole story.',                        hue:260},
+    {user:'DragonScale',   text:'GhostBrush does something no one else does with portraiture.',        hue:80},
+  ],
+  11: [
+    {user:'CrystalDepths', text:'The ember scatter in the upper half is stunning.',                     hue:200},
+    {user:'WillowMist',    text:'Fire as transformation — the piece earns that reading completely.',    hue:140},
+  ],
+  32: [
+    {user:'EmberCraft',    text:'A geological event. Perfectly described.',                             hue:20},
+    {user:'GhostBrush',    text:'The age in her eyes makes this piece. Masterclass.',                   hue:60},
+  ],
+};

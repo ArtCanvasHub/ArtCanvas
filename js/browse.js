@@ -169,6 +169,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 250);
   });
 
+  /* ── BROWSE ACTION BAR ──────────────────────────────── */
+  document.querySelectorAll('.browse-action-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.textContent.trim();
+      if (text.includes('Daily Challenge')) {
+        window.AC.showToast('Daily Challenge coming soon!');
+      } else if (text.includes('AI Art')) {
+        window.AC.showToast('AI Art generator coming soon!');
+      } else if (text.includes('Sell')) {
+        window.AC.showToast('Marketplace coming soon!');
+      } else {
+        window.AC.openUploadModal();
+      }
+    });
+  });
+
   /* Initial render */
   renderGrid();
 });
