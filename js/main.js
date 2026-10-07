@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (heroName)   heroName.textContent = user.name;
   if (heroHandle) heroHandle.innerHTML = `${user.name} <span class="hero-badge">✦</span>`;
-  if (heroTag)    heroTag.textContent  = user.email ? user.email.split('@')[0] + ' on ArtCanvas' : 'New Deviant on ArtCanvas';
+  if (heroTag)    heroTag.textContent  = user.email ? user.email.split('@')[0] + ' on ArtCanvasHub' : 'New Deviant on ArtCanvasHub';
   if (heroMember) heroMember.textContent = '✦ New Deviant';
   if (aboutHd)    aboutHd.textContent = `About ${firstName}`;
   if (aboutBio)   aboutBio.textContent = `Welcome to ArtCanvas, ${firstName}! Upload your first work to get started.`;
