@@ -608,7 +608,7 @@
         card.title = w.title;
         const cv = document.createElement('canvas');
         cv.width = 120; cv.height = 160;
-        drawOn(cv, window.DRAW_FNS[w.style] || window.DRAW_FNS.space);
+        window._artSeed = w.id; drawOn(cv, window.DRAW_FNS[w.style] || window.DRAW_FNS.space); window._artSeed = 0;
         card.appendChild(cv);
         card.addEventListener('click', () => populateModal(w.id));
         related.appendChild(card);
@@ -630,7 +630,7 @@
         mCard.title = w.title;
         const mCv = document.createElement('canvas');
         mCv.width = 120; mCv.height = 160;
-        drawOn(mCv, window.DRAW_FNS[w.style] || window.DRAW_FNS.space);
+        window._artSeed = w.id; drawOn(mCv, window.DRAW_FNS[w.style] || window.DRAW_FNS.space); window._artSeed = 0;
         mCard.appendChild(mCv);
         mCard.addEventListener('click', () => populateModal(w.id));
         mlt.appendChild(mCard);
@@ -660,7 +660,9 @@
 
     const cv = document.createElement('canvas');
     cv.width = cw; cv.height = ch;
+    window._artSeed = work.id;
     drawOn(cv, fn);
+    window._artSeed = 0;
     card.appendChild(cv);
 
     /* Daily Deviation badge for top-liked works */

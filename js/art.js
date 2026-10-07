@@ -2,9 +2,9 @@
    Each function: (ctx, width, height) → renders to canvas
 ──────────────────────────────────────────────────────── */
 
-/* Seeded deterministic RNG */
+/* Seeded deterministic RNG — mixes in window._artSeed so each work looks unique */
 function rng(seed) {
-  let s = (seed ^ 0x5f375a86) >>> 0;
+  let s = ((seed ^ 0x5f375a86) + ((window._artSeed || 0) * 6271 | 0)) >>> 0;
   return () => {
     s ^= s << 13; s ^= s >> 17; s ^= s << 5;
     return (s >>> 0) / 4294967296;
