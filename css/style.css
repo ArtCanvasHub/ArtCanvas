@@ -146,13 +146,14 @@ img, canvas, svg { display: block; }
 .hscroll-card-ov-stat { font-size: 10px; color: rgba(255,255,255,.6); display: flex; align-items: center; gap: 3px; }
 
 /* ── ART CARD (image-only, hover overlay, like DA) ────── */
-.art-card { position: relative; overflow: hidden; border-radius: 2px; cursor: pointer; break-inside: avoid; display: block; background: var(--surf2); }
+.art-card { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; break-inside: avoid; display: block; background: var(--surf2); transition: transform .18s ease, box-shadow .18s ease; }
+.art-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.5); }
 .art-card > canvas { width: 100%; height: auto; display: block; }
 .art-card-ov {
   position: absolute; inset: 0; opacity: 0; transition: opacity .18s ease;
   display: flex; flex-direction: column; justify-content: space-between;
-  padding: 8px;
-  background: linear-gradient(to top, rgba(6,7,13,.88) 0%, rgba(6,7,13,.25) 45%, transparent 75%);
+  padding: 10px;
+  background: linear-gradient(to top, rgba(6,7,13,.92) 0%, rgba(6,7,13,.2) 50%, transparent 80%);
 }
 .art-card:hover .art-card-ov { opacity: 1; }
 .art-card-ov-top { display: flex; justify-content: flex-end; }
@@ -169,8 +170,8 @@ img, canvas, svg { display: block; }
 .art-card-stat svg { width: 10px; height: 10px; }
 
 /* ── MASONRY GRID ────────────────────────────────────── */
-.masonry-grid { columns: 4; column-gap: 3px; }
-.masonry-grid .art-card { margin-bottom: 3px; }
+.masonry-grid { columns: 4; column-gap: 6px; }
+.masonry-grid .art-card { margin-bottom: 6px; }
 
 /* ── GALLERY GRID (fixed 4-col for profile) ───────────── */
 .g-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }

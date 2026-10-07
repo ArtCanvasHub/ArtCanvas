@@ -283,8 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
     main.insertBefore(container, main.firstChild);
   }
 
-  renderExploreStrips();
-
   /* Initial render */
   renderGrid();
 });
