@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArtCanvas</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="logo" href="#">
+      <div class="logo-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1L13 4.5V10L7 13L1 10V4.5L7 1Z" fill="white"/>
+        </svg>
+      </div>
+      <span class="logo-text">Art<em>Canvas</em></span>
+    </a>
+    <div class="srch">
+      <span class="srch-ico">⌕</span>
+      <input type="text" placeholder="Search artists, deviations, and more…">
+    </div>
+    <div class="nav-links">
+      <button class="nbtn">Browse</button>
+      <button class="nbtn">Watch</button>
+      <button class="nbtn">Commissions</button>
+      <button class="nbtn">Shop</button>
+    </div>
+    <div class="nav-r">
+      <button class="btn-submit">+ Submit</button>
+      <button class="nav-ico">🔔</button>
+      <div class="nav-av"><canvas id="navAv" width="68" height="68"></canvas></div>
+    </div>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="banner"><canvas id="bannerC" width="1200" height="280"></canvas></div>
+
+  <!-- PROFILE HEADER -->
+  <div class="ph">
+    <div class="ph-inner">
+      <div class="pav"><canvas id="profAv" width="176" height="176"></canvas></div>
+      <div class="pinfo">
+        <h1 class="pname">YourUsername</h1>
+        <p class="ptag">Digital artist · Character design · Dark fantasy · Concept art</p>
+        <div class="pstats">
+          <div class="pstat"><div class="psv">142</div><div class="psl">Deviations</div></div>
+          <div class="pstat"><div class="psv">8.4K</div><div class="psl">Watchers</div></div>
+          <div class="pstat"><div class="psv">312</div><div class="psl">Following</div></div>
+          <div class="pstat"><div class="psv">2.1K</div><div class="psl">Favourites</div></div>
+        </div>
+      </div>
+      <div class="pact">
+        <button class="btn-watch">Watch</button>
+        <button class="btn-sec">⋯</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <div class="tabs-inner">
+      <button class="tbtn active" data-tab="gallery">Gallery</button>
+      <button class="tbtn" data-tab="favourites">Favourites</button>
+      <button class="tbtn" data-tab="about">About</button>
+      <button class="tbtn" data-tab="comments">Comments</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="layout">
+    <main>
+      <div id="panel-gallery" class="tab-panel active">
+        <div class="sec-hd">All Deviations · 142</div>
+        <div class="g-grid" id="galleryGrid"></div>
+      </div>
+      <div id="panel-favourites" class="tab-panel">
+        <div class="sec-hd">Favourites · 2,104</div>
+        <div class="g-grid" id="favsGrid"></div>
+      </div>
+      <div id="panel-about" class="tab-panel">
+        <div class="about-box">
+          <p class="about-bio">Hi! I'm a digital artist and character designer working in dark fantasy, sci-fi, and original characters. I've been drawing since childhood and went fully digital in 2018. Currently building an original universe — more coming soon.</p>
+          <p class="about-bio">Commission status: <strong style="color:var(--acc)">OPEN</strong> — DM for details.</p>
+          <div class="about-sh">Tools</div>
+          <div class="pill-row">
+            <span class="pill">Clip Studio Paint</span>
+            <span class="pill">Photoshop</span>
+            <span class="pill">Procreate</span>
+            <span class="pill">Blender</span>
+          </div>
+          <div class="about-sh">Interests</div>
+          <div class="pill-row">
+            <span class="pill">Fantasy</span>
+            <span class="pill">Sci-Fi</span>
+            <span class="pill">Character Design</span>
+            <span class="pill">Worldbuilding</span>
+            <span class="pill">Dark Art</span>
+            <span class="pill">Mythology</span>
+            <span class="pill">Anime</span>
+          </div>
+        </div>
+      </div>
+      <div id="panel-comments" class="tab-panel">
+        <div class="empty-box">
+          <div class="empty-icon">💬</div>
+          <div class="empty-title">No comments yet</div>
+          <div class="empty-sub">Be the first to leave a comment!</div>
+        </div>
+      </div>
+    </main>
+    <aside class="sidebar">
+      <div class="sc">
+        <div class="sc-hd">Featured Deviation</div>
+        <div class="feat-thumb"><canvas id="featC" width="480" height="360"></canvas></div>
+        <div class="feat-title">Void Walker</div>
+        <div class="feat-meta">23,847 views · 1,204 favourites</div>
+      </div>
+      <div class="sc">
+        <div class="sc-hd">Watchers <span style="color:var(--fg3);font-weight:400">8,421</span></div>
+        <div class="wgrid" id="watchersGrid"></div>
+      </div>
+      <div class="sc">
+        <div class="sc-hd">Tags</div>
+        <div class="tag-cloud">
+          <span class="tchip">digitalart</span>
+          <span class="tchip">characterdesign</span>
+          <span class="tchip">fantasy</span>
+          <span class="tchip">scifi</span>
+          <span class="tchip">oc</span>
+          <span class="tchip">darkfantasy</span>
+          <span class="tchip">originalcharacter</span>
+          <span class="tchip">conceptart</span>
+          <span class="tchip">anime</span>
+          <span class="tchip">illustration</span>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-hd">Groups</div>
+        <div class="grp-row" id="grpRow"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="js/art.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

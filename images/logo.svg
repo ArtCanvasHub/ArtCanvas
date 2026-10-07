@@ -1,0 +1,43 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="56%" r="38%">
+      <stop offset="0%" stop-color="#05c26b" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#05c26b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="aLeft" cx="30%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="crossbarGlow" x="-40%" y="-80%" width="180%" height="260%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="500" height="500" rx="90" fill="#06070d"/>
+  <rect width="500" height="500" rx="90" fill="url(#bgGlow)"/>
+
+  <!-- Crossbar glow (behind the letter) -->
+  <polygon points="130,252 370,252 390,308 110,308"
+           fill="#05c26b" opacity="0.22" filter="url(#crossbarGlow)"/>
+
+  <!-- Outer A shape -->
+  <polygon points="250,78 406,398 94,398" fill="#dce0e8"/>
+
+  <!-- Subtle left-face highlight -->
+  <polygon points="250,78 158,268 210,268 250,162" fill="url(#aLeft)"/>
+
+  <!-- Inner counter: top triangle (negative space above crossbar) -->
+  <polygon points="250,162 290,268 210,268" fill="#06070d"/>
+
+  <!-- Crossbar — follows the A's slope for clean alignment -->
+  <polygon points="158,268 342,268 360,304 140,304" fill="#05c26b"/>
+
+  <!-- Inner counter: bottom trapezoid (negative space below crossbar) -->
+  <polygon points="210,304 290,304 354,398 146,398" fill="#06070d"/>
+
+  <!-- Apex accent dot -->
+  <circle cx="250" cy="68" r="7" fill="#05c26b" opacity="0.9"/>
+  <circle cx="250" cy="68" r="14" fill="#05c26b" opacity="0.2"/>
+</svg>
