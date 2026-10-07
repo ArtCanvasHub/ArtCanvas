@@ -33,7 +33,7 @@ function requireAuth() {
 function loginAsDemo() {
   setUser({
     name:       'Guest Artist',
-    email:      'guest@artcanvas.io',
+    email:      'guest@artcanvashub.io',
     picture:    null,
     sub:        'demo_' + Date.now(),
     given_name: 'Guest',

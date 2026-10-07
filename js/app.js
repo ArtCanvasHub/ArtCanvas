@@ -431,10 +431,10 @@
         navigator.clipboard.writeText(url).then(() => {
           showToast('Link copied to clipboard!', 'success');
         }).catch(() => {
-          showToast('Share: artcanvas.io/work/' + (currentWorkId || ''), 'success');
+          showToast('Share: artcanvashub.io/work/' + (currentWorkId || ''), 'success');
         });
       } catch (e) {
-        showToast('Share: artcanvas.io/work/' + (currentWorkId || ''), 'success');
+        showToast('Share: artcanvashub.io/work/' + (currentWorkId || ''), 'success');
       }
     });
 
