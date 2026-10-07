@@ -104,20 +104,20 @@
             Artist
             <span class="hero-badge">✦</span>
           </div>
-          <div class="hero-tag" id="heroTag">New member</div>
+          <div class="hero-tag" id="heroTag">New Deviant</div>
           <div class="hero-stats">
-            <span class="hs-item" id="heroMember">✦ New member</span>
+            <span class="hs-item" id="heroMember">✦ New Deviant</span>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="followers" id="heroFollowers">0 Followers</button>
+            <button class="hs-link" data-stat="watchers" id="heroFollowers">0 Watchers</button>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="following" id="heroFollowing">0 Following</button>
+            <button class="hs-link" data-stat="watching" id="heroFollowing">0 Watching</button>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="works" id="heroWorks">0 Works</button>
+            <button class="hs-link" data-stat="deviations" id="heroWorks">0 Deviations</button>
           </div>
           <div class="hero-stats">
             <span class="hs-item">0 Profile Views</span>
             <span class="hs-dot">·</span>
-            <button class="hs-link" data-stat="liked">0 Liked</button>
+            <button class="hs-link" data-stat="favourites">0 Favourites</button>
           </div>
         </div>
       </div>
@@ -127,8 +127,8 @@
     <div class="tab-strip">
       <div class="tab-strip-tabs">
         <button class="tbtn active" data-tab="home">Home</button>
-        <button class="tbtn" data-tab="portfolio">Portfolio</button>
-        <button class="tbtn" data-tab="liked">Liked</button>
+        <button class="tbtn" data-tab="gallery">Gallery</button>
+        <button class="tbtn" data-tab="favourites">Favourites</button>
         <button class="tbtn" data-tab="journal">Journal</button>
         <button class="tbtn" data-tab="about">About</button>
       </div>
@@ -141,7 +141,7 @@
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </button>
-        <button class="btn-watch-hero btn-follow-toggle" data-following="false">+ Follow</button>
+        <button class="btn-watch-hero btn-follow-toggle" data-following="false">Watch</button>
       </div>
     </div>
 
@@ -155,7 +155,7 @@
           <!-- Recent Works - empty state -->
           <div class="sec">
             <div class="sec-hd-row">
-              <span class="sec-hd-label">Recent Works</span>
+              <span class="sec-hd-label">Latest Deviations</span>
             </div>
             <div class="empty-banner">
               <div class="empty-banner-icon">
@@ -165,11 +165,11 @@
                   <polyline points="21 15 16 10 5 21"/>
                 </svg>
               </div>
-              <div class="empty-banner-title">No works yet</div>
-              <p class="empty-banner-sub">When you upload your work, it will appear here for everyone to see.</p>
+              <div class="empty-banner-title">No deviations yet</div>
+              <p class="empty-banner-sub">When you submit a deviation, it will appear here for everyone to see.</p>
               <button class="empty-banner-cta" data-action="upload">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
-                Upload Your First Work
+                Submit Your First Deviation
               </button>
             </div>
           </div>
@@ -190,6 +190,19 @@
             </div>
           </div>
 
+          <!-- Profile Comments -->
+          <div class="sec">
+            <div class="sec-hd-row">
+              <span class="sec-hd-label">Comments</span>
+            </div>
+            <div class="profile-comments" id="profileCommentsList"></div>
+            <div class="pc-form">
+              <canvas class="pc-form-av" width="32" height="32" id="pcFormAv"></canvas>
+              <input type="text" class="pc-form-input" id="pcCommentInput" placeholder="Leave a comment on this profile…">
+              <button class="pc-form-send" id="pcCommentSend">Post</button>
+            </div>
+          </div>
+
         </div>
         <div class="home-aside">
 
@@ -198,24 +211,31 @@
             <div class="about-card-hd" id="aboutCardHd">About Me</div>
             <div class="about-meta-row">
               <span class="about-meta-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 <span id="aboutJoinDate">Joined recently</span>
+              </span>
+              <span class="about-meta-item" id="aboutMetaLocation" style="margin-left:14px">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span id="aboutCardLocation">Location not set</span>
               </span>
             </div>
             <div class="about-meta-row" style="margin-top:8px">
               <span class="about-type-pill">Artist</span>
-              <span class="about-type-pill">New Member</span>
+              <span class="about-type-pill" id="aboutCardDuration">New Deviant</span>
             </div>
             <p class="about-bio-short" id="aboutBio">Welcome to ArtCanvas! Upload your first work to get started.</p>
             <div class="about-card-sh">Achievements</div>
             <div class="badges-row">
               <span class="badge-chip" title="New Member">✦</span>
+              <span class="badge-chip badge-chip-gold" title="Active Creator">🎨</span>
+              <span class="badge-chip badge-chip-blue" title="Community Member">💬</span>
+              <span class="badge-chip badge-chip-purple" title="Collector">⭐</span>
             </div>
           </div>
 
           <!-- Followers -->
           <div class="sc">
-            <div class="sc-hd">Followers <span class="sc-hd-count" id="followersCount">0</span></div>
+            <div class="sc-hd">Watchers <span class="sc-hd-count" id="followersCount">0</span></div>
             <div class="wgrid" id="followersGrid"></div>
           </div>
 
@@ -242,12 +262,18 @@
             <div class="grp-row" id="grpRow"></div>
           </div>
 
+          <!-- Who to Watch -->
+          <div class="sc">
+            <div class="sc-hd">Who to Watch</div>
+            <div id="whoToWatch"></div>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <!-- PORTFOLIO TAB -->
-    <div class="tab-panel" id="tab-portfolio">
+    <!-- GALLERY TAB -->
+    <div class="tab-panel" id="tab-gallery">
       <div class="gallery-page">
 
         <!-- Collection row - empty -->
@@ -284,19 +310,19 @@
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
             </div>
-            <div class="empty-title">Your portfolio is empty</div>
-            <div class="empty-sub">Upload your first work to start building your portfolio.</div>
+            <div class="empty-title">Your gallery is empty</div>
+            <div class="empty-sub">Submit a deviation to start building your gallery.</div>
             <button class="empty-cta" data-action="upload">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
-              Upload a Work
+              Submit a Deviation
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- LIKED TAB -->
-    <div class="tab-panel" id="tab-liked">
+    <!-- FAVOURITES TAB -->
+    <div class="tab-panel" id="tab-favourites">
       <div class="gallery-page">
         <div class="empty-box">
           <div class="empty-icon">
@@ -304,9 +330,9 @@
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </div>
-          <div class="empty-title">No liked works yet</div>
-          <div class="empty-sub">Works you like will appear here so you can find them again.</div>
-          <a class="empty-cta" href="browse.html">Explore Works</a>
+          <div class="empty-title">No favourites yet</div>
+          <div class="empty-sub">Deviations you favourite will appear here so you can find them again.</div>
+          <a class="empty-cta" href="browse.html">Browse Deviations</a>
         </div>
       </div>
     </div>
@@ -314,18 +340,15 @@
     <!-- JOURNAL TAB -->
     <div class="tab-panel" id="tab-journal">
       <div class="gallery-page">
-        <div class="empty-box">
-          <div class="empty-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
+        <div class="journal-page">
+          <div class="journal-header">
+            <span class="sec-hd-label">Posts &amp; Journal</span>
+            <button class="empty-cta" style="margin-top:0;padding:7px 16px;font-size:12px">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M12 5v14m-7-7h14"/></svg>
+              Write Entry
+            </button>
           </div>
-          <div class="empty-title">No journal entries yet</div>
-          <div class="empty-sub">Share your creative process, thoughts, or updates with your followers.</div>
-          <button class="empty-cta">Write an Entry</button>
+          <div class="journal-list" id="journalList"></div>
         </div>
       </div>
     </div>
@@ -336,8 +359,47 @@
         <div class="about-full">
           <div class="about-full-main">
             <div class="about-box">
-              <div class="about-sh">Bio</div>
+
+              <!-- Quick facts (DA-style horizontal row) -->
+              <div class="about-qf-row" id="aboutQfRow">
+                <span class="about-qf-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <span id="aboutQfJoinDate">Loading…</span>
+                </span>
+                <span class="about-qf-sep">·</span>
+                <span class="about-qf-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span id="aboutQfLocation">Location not set</span>
+                </span>
+                <span class="about-qf-sep">·</span>
+                <span class="about-qf-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span id="aboutQfDuration">New Deviant</span>
+                </span>
+              </div>
+              <div class="about-pronouns" id="aboutPronouns">They / Them</div>
+
+              <!-- Badges -->
+              <div class="about-sh" style="margin-top:18px">Badges</div>
+              <div class="about-badges-row">
+                <div class="about-badge-icon" title="New Member">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="about-badge-icon about-badge-blue" title="Active Creator">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
+                <div class="about-badge-icon about-badge-green" title="Community Member">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <div class="about-badge-icon about-badge-purple" title="Art Collector">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </div>
+              </div>
+
+              <!-- Bio -->
+              <div class="about-sh" style="margin-top:20px">My Bio</div>
               <p class="about-bio" id="aboutFullBio">You haven't written a bio yet. Tell the community about your art, your inspirations, and what you create.</p>
+
               <div class="about-sh" style="margin-top:24px">Get Started</div>
               <p style="color:var(--fg3);font-size:13px;line-height:1.7;margin-top:8px">Upload your first work to start building your portfolio on ArtCanvas. Your art deserves an audience.</p>
               <div style="margin-top:16px">
@@ -360,12 +422,61 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
                   <span id="aboutDetailEmail">—</span>
                 </div>
+                <div class="detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span id="aboutDetailLocation">Location not set</span>
+                </div>
+                <div class="detail-row">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                  <span>Artist · Digital Media</span>
+                </div>
               </div>
             </div>
             <div class="sc" style="margin-top:12px">
               <div class="sc-hd">Commission Status</div>
-              <div class="comm-status">
-                Set up commissions after uploading your first work.
+              <div class="comm-status open">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Open for Commissions
+              </div>
+            </div>
+
+            <div class="sc" style="margin-top:12px">
+              <div class="sc-hd">Interests</div>
+              <div class="interests-list">
+                <div class="interest-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  Digital Art · Concept Art · Sci-Fi
+                </div>
+                <div class="interest-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  Favorite artists: Moebius, Syd Mead
+                </div>
+                <div class="interest-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                  Listening to: Synthwave · Ambient · Lo-fi
+                </div>
+              </div>
+            </div>
+
+            <div class="sc" style="margin-top:12px">
+              <div class="sc-hd">Links</div>
+              <div class="social-links" id="socialLinks">
+                <a class="social-link" href="#" title="Portfolio Website">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  Portfolio Website
+                </a>
+                <a class="social-link" href="#" title="Twitter / X">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.7 5.5 4.3 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                  Twitter / X
+                </a>
+                <a class="social-link" href="#" title="Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                  Instagram
+                </a>
+                <a class="social-link" href="#" title="Patreon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="14.5" cy="9.5" r="6.5"/><line x1="4" y1="2" x2="4" y2="22"/></svg>
+                  Patreon
+                </a>
               </div>
             </div>
           </div>

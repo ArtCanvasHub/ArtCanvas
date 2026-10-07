@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: artcanvas
+    env: static
+    buildCommand: ""
+    staticPublishPath: /
+    pullRequestPreviewsEnabled: false

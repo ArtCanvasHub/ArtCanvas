@@ -236,6 +236,18 @@
         showToast('Shop coming soon!');
         return;
       }
+      /* Community sidebar links */
+      const commLink = e.target.closest('.community-link');
+      if (commLink) {
+        e.preventDefault();
+        const text = commLink.textContent.trim();
+        if (text.includes('Challenge')) showToast('Daily Challenges coming soon!');
+        else if (text.includes('Group')) showToast('Groups coming soon!');
+        else if (text.includes('Journal')) showToast('Journals / Posts coming soon!');
+        else if (text.includes('DreamUp') || text.includes('AI')) showToast('AI Art generator coming soon!');
+        else showToast('Coming soon!');
+        return;
+      }
       /* Messages */
       if (e.target.closest('.nav-icon-btn[title="Messages"]')) {
         showToast('Messages coming soon!');
@@ -320,7 +332,10 @@
               <button class="wm-follow-btn btn-follow-toggle" data-following="false">+ Follow</button>
             </div>
 
-            <div class="wm-title"></div>
+            <div class="wm-title-row">
+              <div class="wm-title"></div>
+              <span class="wm-category-badge"></span>
+            </div>
 
             <div class="wm-stats-row">
               <span class="wm-stat">
@@ -334,6 +349,10 @@
               <span class="wm-stat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 <span class="wm-comment-count"></span>
+              </span>
+              <span class="wm-stat wm-published-stat">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span class="wm-published"></span>
               </span>
             </div>
 
@@ -349,6 +368,10 @@
               <button class="wm-share-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 Share
+              </button>
+              <button class="wm-download-btn" title="Download">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
               </button>
             </div>
 
@@ -371,6 +394,11 @@
               <div class="wm-related-hd">More from this artist</div>
               <div class="wm-related-row"></div>
             </div>
+
+            <div class="wm-mlt-section">
+              <div class="wm-mlt-hd">More Like This</div>
+              <div class="wm-mlt-row"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -389,6 +417,11 @@
       this.classList.toggle('saved', !saved);
       this.querySelector('svg').setAttribute('fill', !saved ? 'currentColor' : 'none');
       showToast(!saved ? 'Saved to your collection!' : 'Removed from collection', !saved ? 'success' : '');
+    });
+
+    /* Download */
+    el.querySelector('.wm-download-btn').addEventListener('click', () => {
+      showToast('Downloading original file…', 'success');
     });
 
     /* Share */
@@ -446,7 +479,35 @@
     drawOn(cv, window.drawWatcher, artist ? artist.seed : c.hue || 0);
     const body = document.createElement('div');
     body.className = 'wm-comment-body';
-    body.innerHTML = `<span class="wm-comment-user">${c.user}</span><span class="wm-comment-text"> ${c.text}</span>`;
+    const likeCount = c.likes || Math.floor(Math.random() * 8);
+    body.innerHTML = `
+      <div><span class="wm-comment-user">${c.user}</span><span class="wm-comment-text"> ${c.text}</span></div>
+      <div class="wm-comment-actions">
+        <button class="wm-comment-like-btn" data-liked="false" data-likes="${likeCount}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wm-comment-like-count">${likeCount > 0 ? likeCount : ''}</span>
+        </button>
+        <button class="wm-comment-reply-btn">Reply</button>
+      </div>
+    `;
+    /* Like toggle */
+    const likeBtn = body.querySelector('.wm-comment-like-btn');
+    likeBtn.addEventListener('click', function () {
+      const liked = this.dataset.liked === 'true';
+      this.dataset.liked = String(!liked);
+      this.classList.toggle('liked', !liked);
+      this.querySelector('svg').setAttribute('fill', !liked ? 'currentColor' : 'none');
+      const n = parseInt(this.dataset.likes, 10) || 0;
+      this.dataset.likes = String(!liked ? n + 1 : Math.max(0, n - 1));
+      const countEl = this.querySelector('.wm-comment-like-count');
+      countEl.textContent = parseInt(this.dataset.likes, 10) > 0 ? this.dataset.likes : '';
+    });
+    /* Reply */
+    body.querySelector('.wm-comment-reply-btn').addEventListener('click', () => {
+      const input = modalEl.querySelector('.wm-comment-input');
+      input.value = `@${c.user} `;
+      input.focus();
+    });
     el.appendChild(cv);
     el.appendChild(body);
     return el;
@@ -492,12 +553,22 @@
 
     /* Meta */
     modalEl.querySelector('.wm-title').textContent        = work.title;
-    modalEl.querySelector('.wm-views').textContent        = work.views;
-    modalEl.querySelector('.wm-like-count').textContent   = work.likes.toLocaleString();
+    modalEl.querySelector('.wm-views').textContent        = work.views + ' views';
+    modalEl.querySelector('.wm-like-count').textContent   = work.likes.toLocaleString() + ' likes';
     const cc = comments.length;
-    modalEl.querySelectorAll('.wm-comment-count').forEach(e => e.textContent = cc);
+    modalEl.querySelectorAll('.wm-comment-count').forEach(e => e.textContent = cc + ' comments');
     modalEl.querySelector('.wm-comment-count-hd').textContent = cc;
     modalEl.querySelector('.wm-desc').textContent         = work.desc;
+    /* Category badge */
+    const catBadge = modalEl.querySelector('.wm-category-badge');
+    if (catBadge) catBadge.textContent = work.category || '';
+    /* Published date (derive from id — higher id = more recent) */
+    const published = modalEl.querySelector('.wm-published');
+    if (published) {
+      const daysAgo = Math.max(0, 60 - work.id);
+      const d = new Date(Date.now() - daysAgo * 86400000);
+      published.textContent = d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+    }
 
     /* Like/save/follow reset */
     const likeBtn = modalEl.querySelector('.wm-like-btn');
@@ -515,9 +586,9 @@
     saveBtn.classList.remove('saved');
     saveBtn.querySelector('svg').setAttribute('fill', 'none');
 
-    /* Tags → browse.html */
+    /* Tags → browse.html filtered */
     modalEl.querySelector('.wm-tags').innerHTML =
-      work.tags.map(t => `<a class="wm-tag" href="browse.html">#${t}</a>`).join('');
+      work.tags.map(t => `<a class="wm-tag" href="browse.html?q=${encodeURIComponent(t)}">#${t}</a>`).join('');
 
     /* Comments */
     const list = modalEl.querySelector('.wm-comments-list');
@@ -541,6 +612,28 @@
         card.appendChild(cv);
         card.addEventListener('click', () => populateModal(w.id));
         related.appendChild(card);
+      });
+
+    /* More Like This — from other artists, matching style/category/tags */
+    const mlt = modalEl.querySelector('.wm-mlt-row');
+    mlt.innerHTML = '';
+    window.AC_WORKS
+      .filter(w => w.artistId !== work.artistId && (
+        w.style === work.style ||
+        w.category === work.category ||
+        w.tags.some(t => work.tags.includes(t))
+      ))
+      .slice(0, 6)
+      .forEach(w => {
+        const mCard = document.createElement('div');
+        mCard.className = 'wm-related-card';
+        mCard.title = w.title;
+        const mCv = document.createElement('canvas');
+        mCv.width = 120; mCv.height = 160;
+        drawOn(mCv, window.DRAW_FNS[w.style] || window.DRAW_FNS.space);
+        mCard.appendChild(mCv);
+        mCard.addEventListener('click', () => populateModal(w.id));
+        mlt.appendChild(mCard);
       });
 
     /* Nav arrows */
@@ -569,6 +662,14 @@
     cv.width = cw; cv.height = ch;
     drawOn(cv, fn);
     card.appendChild(cv);
+
+    /* Daily Deviation badge for top-liked works */
+    if (work.likes > 15000) {
+      const ddBadge = document.createElement('div');
+      ddBadge.className = 'dd-badge';
+      ddBadge.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="9" height="9"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> DD`;
+      card.appendChild(ddBadge);
+    }
 
     const ov = document.createElement('div');
     ov.className = 'art-card-ov';
@@ -605,7 +706,7 @@
 
     const statEl = document.createElement('span');
     statEl.className = 'art-card-stat';
-    statEl.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> ${work.likes.toLocaleString()}`;
+    statEl.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> ${work.likes.toLocaleString()} <span class="art-card-stat-sep">·</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> ${work.views}`;
 
     authorRow.appendChild(avCv);
     authorRow.appendChild(nameEl);
