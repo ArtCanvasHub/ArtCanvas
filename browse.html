@@ -15,40 +15,55 @@
 <nav class="nav">
   <a class="logo" href="index.html">
     <span class="logo-icon">
-      <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/><polygon points="6,12.5 14,12.5 15,15 5,15" fill="#05c26b" opacity=".55"/></svg>
+      <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
     </span>
     <span class="logo-text">Art<em>Canvas</em></span>
   </a>
+  <button class="nav-shop">Shop</button>
 
   <div class="srch">
     <span class="srch-ico">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </span>
     <input type="search" id="searchInput" placeholder="Search artists, works, tags…">
   </div>
 
-  <nav class="nav-links">
-    <a class="nbtn nav-page-link active" href="browse.html" data-page="browse.html">Explore</a>
-    <a class="nbtn nav-page-link" href="index.html" data-page="index.html">Following</a>
-    <button class="nbtn">Shop</button>
-  </nav>
-
   <div class="nav-r">
     <button class="btn-submit">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"/></svg>
-      Upload Work
+      Submit Your Art
     </button>
     <button class="nav-icon-btn" title="Notifications">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
     </button>
-    <div class="nav-av"><canvas id="navAv" width="36" height="36"></canvas></div>
+    <div class="nav-av"><canvas id="navAv" width="32" height="32"></canvas></div>
   </div>
 </nav>
 
 <!-- ── BROWSE PAGE ────────────────────────────────── -->
 <div class="browse-page">
 
-  <!-- Category / Sort bar -->
+  <!-- Action bar -->
+  <div class="browse-actions">
+    <button class="browse-action-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
+      Submit Your Art
+    </button>
+    <button class="browse-action-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Daily Challenge
+    </button>
+    <button class="browse-action-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      Create AI Art
+    </button>
+    <button class="browse-action-btn" style="color:var(--acc);border-color:rgba(0,229,155,.3)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Sell Your Art
+    </button>
+  </div>
+
+  <!-- Category bar + sort -->
   <div class="browse-bar">
     <div class="browse-cats" id="browseCats">
       <button class="cat-pill active" data-cat="all">All</button>
@@ -69,9 +84,9 @@
   <!-- Layout -->
   <div class="browse-layout">
 
-    <!-- Main grid -->
+    <!-- Main masonry grid -->
     <main class="browse-main">
-      <div class="g-grid" id="browseGrid"></div>
+      <div class="masonry-grid" id="browseGrid"></div>
       <div class="load-more-row">
         <button class="load-more-btn" id="loadMoreBtn">Load more</button>
       </div>
@@ -80,43 +95,36 @@
     <!-- Sidebar -->
     <aside class="browse-side">
 
-      <!-- Trending Tags -->
       <div class="sc">
         <div class="sc-hd">Trending Tags</div>
         <div class="tag-cloud">
-          <a class="tchip" href="#">#digitalart</a>
-          <a class="tchip" href="#">#fantasy</a>
-          <a class="tchip" href="#">#scifi</a>
-          <a class="tchip" href="#">#conceptart</a>
-          <a class="tchip" href="#">#characterdesign</a>
-          <a class="tchip" href="#">#environment</a>
-          <a class="tchip" href="#">#illustration</a>
-          <a class="tchip" href="#">#dragon</a>
-          <a class="tchip" href="#">#mecha</a>
-          <a class="tchip" href="#">#neon</a>
-          <a class="tchip" href="#">#space</a>
-          <a class="tchip" href="#">#abstract</a>
+          <a class="tchip" href="browse.html">All</a>
+          <a class="tchip" href="browse.html">Digital Art</a>
+          <a class="tchip" href="browse.html">Fantasy</a>
+          <a class="tchip" href="browse.html">Sci-Fi</a>
+          <a class="tchip" href="browse.html">Concept Art</a>
+          <a class="tchip" href="browse.html">Character</a>
+          <a class="tchip" href="browse.html">Space</a>
+          <a class="tchip" href="browse.html">Dragon</a>
+          <a class="tchip" href="browse.html">Mecha</a>
+          <a class="tchip" href="browse.html">Neon</a>
+          <a class="tchip" href="browse.html">Dark Art</a>
         </div>
       </div>
 
-      <!-- Featured Artists -->
       <div class="sc">
         <div class="sc-hd">Featured Artists</div>
-        <div class="featured-artists" id="featuredArtists"></div>
+        <div id="featuredArtists"></div>
       </div>
 
-      <!-- About ArtCanvas -->
       <div class="sc">
         <div class="sc-hd">About ArtCanvas</div>
-        <p style="font-size:12.5px;color:var(--fg2);line-height:1.65">
-          A home for artists to share their work, connect with others, and grow their audience.
-        </p>
-        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-          <a href="#" style="font-size:12px;color:var(--acc)">Join Free</a>
-          <span style="color:var(--fg3);font-size:12px">·</span>
-          <a href="#" style="font-size:12px;color:var(--fg2)">About</a>
-          <span style="color:var(--fg3);font-size:12px">·</span>
-          <a href="#" style="font-size:12px;color:var(--fg2)">Blog</a>
+        <p style="font-size:12px;color:var(--fg3);line-height:1.65">A home for artists to share their work, grow their audience, and connect with a global community.</p>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a href="#" style="font-size:12px;color:var(--acc);font-weight:700">Join Free</a>
+          <a href="#" style="font-size:12px;color:var(--fg3)">About</a>
+          <a href="#" style="font-size:12px;color:var(--fg3)">Blog</a>
+          <a href="#" style="font-size:12px;color:var(--fg3)">Help</a>
         </div>
       </div>
 
@@ -129,13 +137,13 @@
   <div class="footer-inner">
     <div class="footer-logo">
       <span class="footer-logo-icon">
-        <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/><polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/></svg>
+        <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
       </span>
       <span class="footer-logo-text">Art<em>Canvas</em></span>
     </div>
     <div class="footer-links">
-      <a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a>
-      <a href="#">Help</a><a href="#">API</a><a href="#">Privacy</a><a href="#">Terms</a>
+      <a href="index.html">Home</a><a href="#">About</a><a href="#">Careers</a>
+      <a href="#">Blog</a><a href="#">Help</a><a href="#">Privacy</a><a href="#">Terms</a>
     </div>
     <div class="footer-copy">&copy; 2026 ArtCanvas</div>
   </div>

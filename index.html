@@ -34,9 +34,8 @@
   </div>
 
   <nav class="nav-links">
-    <a class="nbtn nav-page-link" href="browse.html" data-page="browse.html">Explore</a>
-    <a class="nbtn nav-page-link active" href="index.html" data-page="index.html">Following</a>
-    <button class="nbtn">Shop</button>
+    <a class="nav-page-link" href="browse.html" data-page="browse.html">Explore</a>
+    <a class="nav-page-link active" href="index.html" data-page="index.html">Following</a>
   </nav>
 
   <div class="nav-r">
@@ -70,31 +69,35 @@
 
   <!-- Left icon sidebar -->
   <aside class="lsb">
-    <button class="lsb-btn" title="Home">
+    <a class="lsb-btn active" href="index.html" title="Home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
-    </button>
-    <button class="lsb-btn active" title="Explore">
+      <span class="lsb-btn-label">Home</span>
+    </a>
+    <a class="lsb-btn" href="browse.html" title="Explore">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="10"/>
         <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
       </svg>
-    </button>
-    <button class="lsb-btn" title="Liked">
+      <span class="lsb-btn-label">Explore</span>
+    </a>
+    <a class="lsb-btn" href="#" title="Liked">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
       </svg>
-    </button>
-    <button class="lsb-btn" title="Groups">
+      <span class="lsb-btn-label">Liked</span>
+    </a>
+    <a class="lsb-btn" href="#" title="Groups">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
         <circle cx="9" cy="7" r="4"/>
         <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
         <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
       </svg>
-    </button>
+      <span class="lsb-btn-label">Groups</span>
+    </a>
   </aside>
 
   <!-- Main column -->
@@ -199,6 +202,15 @@
               </div>
               <button class="spotlight-pin-btn">Pin a Work</button>
             </div>
+          </div>
+
+          <!-- Discover from the community -->
+          <div class="sec">
+            <div class="sec-hd-row">
+              <span class="sec-hd-label">Discover</span>
+              <a class="sec-see-all" href="browse.html">See all →</a>
+            </div>
+            <div class="masonry-grid" id="discoverGrid" style="columns:3"></div>
           </div>
 
         </div>

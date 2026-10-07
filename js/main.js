@@ -86,4 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     collectionRow.appendChild(addCollBtn);
   }
+
+  /* Discover grid — show community art on profile home tab */
+  const discoverGrid = document.getElementById('discoverGrid');
+  if (discoverGrid && window.AC_WORKS && window.AC) {
+    const works = window.AC_WORKS.slice(0, 9);
+    const queue = works.map(w => w.id);
+    works.forEach(work => {
+      const card = window.AC.makeArtCard(work);
+      card.addEventListener('click', e => {
+        if (e.target.closest('.art-like-btn')) return;
+        window.AC.openWork(work.id, queue);
+      }, true);
+      discoverGrid.appendChild(card);
+    });
+  }
 });

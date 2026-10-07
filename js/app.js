@@ -319,42 +319,76 @@
     void idx;
   }
 
-  /* ── ART CARD FACTORY (shared) ──────────────────── */
+  /* ── ART CARD FACTORY (image-only, DA-style hover) ─ */
+  function cardDims(work) {
+    /* Vary aspect ratios for masonry interest */
+    if (work.id % 7 === 0) return [400, 280]; /* landscape */
+    if (work.id % 5 === 0) return [300, 300]; /* square */
+    return [300, 400];                         /* portrait (default) */
+  }
+
   function makeArtCard(work) {
     const card = document.createElement('div');
     card.className = 'art-card';
     card.dataset.workId = work.id;
 
+    const artist = getArtist(work.artistId);
     const fn = window.DRAW_FNS[work.style] || window.DRAW_FNS.space;
+    const [cw, ch] = cardDims(work);
 
-    card.innerHTML = `
-      <div class="art-thumb">
-        <canvas width="300" height="400"></canvas>
-        <div class="art-ov">
-          <div class="art-ov-title">${work.title}</div>
-          <div class="art-ov-stats">
-            <span class="art-ov-stat">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              ${work.views}
-            </span>
-            <span class="art-ov-stat">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              ${work.likes.toLocaleString()}
-            </span>
-          </div>
-        </div>
-        <button class="art-like-btn" data-liked="false" title="Like">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span class="like-count">${work.likes.toLocaleString()}</span>
-        </button>
-      </div>
-      <div class="art-foot">
-        <div class="art-title">${work.title}</div>
-        <div class="art-artist">${getArtist(work.artistId).name}</div>
-      </div>
-    `;
+    /* Main art canvas */
+    const cv = document.createElement('canvas');
+    cv.width = cw; cv.height = ch;
+    drawOn(cv, fn);
+    card.appendChild(cv);
 
-    drawOn(card.querySelector('canvas'), fn);
+    /* Hover overlay */
+    const ov = document.createElement('div');
+    ov.className = 'art-card-ov';
+
+    /* Top: like button */
+    const top = document.createElement('div');
+    top.className = 'art-card-ov-top';
+    const likeBtn = document.createElement('button');
+    likeBtn.className = 'art-like-btn';
+    likeBtn.dataset.liked = 'false';
+    likeBtn.title = 'Like';
+    likeBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+    top.appendChild(likeBtn);
+    ov.appendChild(top);
+
+    /* Bottom: title + artist */
+    const btm = document.createElement('div');
+    btm.className = 'art-card-ov-btm';
+
+    const title = document.createElement('div');
+    title.className = 'art-card-title';
+    title.textContent = work.title;
+
+    const authorRow = document.createElement('div');
+    authorRow.className = 'art-card-author';
+
+    const avCv = document.createElement('canvas');
+    avCv.width = 18; avCv.height = 18;
+    avCv.className = 'art-card-av';
+    drawOn(avCv, window.drawWatcher, artist.seed);
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'art-card-author-name';
+    nameEl.textContent = artist.name;
+
+    const statEl = document.createElement('span');
+    statEl.className = 'art-card-stat';
+    statEl.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> ${work.likes.toLocaleString()}`;
+
+    authorRow.appendChild(avCv);
+    authorRow.appendChild(nameEl);
+    authorRow.appendChild(statEl);
+
+    btm.appendChild(title);
+    btm.appendChild(authorRow);
+    ov.appendChild(btm);
+    card.appendChild(ov);
 
     card.addEventListener('click', e => {
       if (e.target.closest('.art-like-btn')) return;
