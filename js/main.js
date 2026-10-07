@@ -170,9 +170,26 @@ document.addEventListener('DOMContentLoaded', () => {
     drawOn(navAvEl, window.drawAvatar);
   }
 
-  /* ── Followers grid ─────────────────────────── */
+  /* ── Followers grid (use real artists) ─────── */
   const wg = document.getElementById('followersGrid');
-  if (wg) {
+  const followersCount = document.getElementById('followersCount');
+  if (wg && window.AC_ARTISTS && window.AC_ARTISTS.length > 0) {
+    const displayArtists = window.AC_ARTISTS.slice(0, 16);
+    if (followersCount) followersCount.textContent = displayArtists.length;
+    displayArtists.forEach(a => {
+      const wrap = document.createElement('div');
+      wrap.className = 'wav';
+      wrap.title = a.name;
+      const cv = document.createElement('canvas');
+      cv.width = 40; cv.height = 40;
+      drawOn(cv, window.drawWatcher, a.seed);
+      wrap.appendChild(cv);
+      wg.appendChild(wrap);
+    });
+    /* update hero follower count */
+    const heroFollowers = document.getElementById('heroFollowers');
+    if (heroFollowers) heroFollowers.textContent = displayArtists.length + ' Followers';
+  } else {
     FOLLOWERS.forEach((w, i) => {
       const wrap = document.createElement('div');
       wrap.className = 'wav';
