@@ -37,12 +37,19 @@ function glow(ctx, drawFn, color, sizes) {
    SPACE — deep-space nebula with ringed gas giant
 ══════════════════════════════════════════════════════ */
 function drawSpace(ctx, w, h) {
+  const rv = rng(3719);
+  const hueOff = rv() * 340;
+  const pxFrac = .32 + rv() * .38;
+  const pyFrac = .12 + rv() * .32;
+  const prFrac = .15 + rv() * .16;
+
   /* ── Deep space bg ── */
+  const bgH = (220 + hueOff) % 360;
   const bg = ctx.createRadialGradient(w*.42, h*.3, 0, w*.5, h*.5, Math.hypot(w,h)*.7);
-  bg.addColorStop(0,  '#1c0b40');
-  bg.addColorStop(.35,'#0c0525');
-  bg.addColorStop(.7, '#050215');
-  bg.addColorStop(1,  '#010109');
+  bg.addColorStop(0,  `hsl(${bgH},70%,12%)`);
+  bg.addColorStop(.35,`hsl(${bgH},80%,5%)`);
+  bg.addColorStop(.7, `hsl(${bgH},85%,3%)`);
+  bg.addColorStop(1,  `hsl(${bgH},80%,2%)`);
   ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
 
   const r = rng(42);
@@ -88,11 +95,11 @@ function drawSpace(ctx, w, h) {
 
   /* ── Nebula clouds ── */
   const nebulas = [
-    {x:.26,y:.28,r:.55,h:238,a:.15},
-    {x:.72,y:.38,r:.48,h:280,a:.12},
-    {x:.5, y:.65,r:.42,h:200,a:.10},
-    {x:.12,y:.62,r:.32,h:310,a:.09},
-    {x:.85,y:.7, r:.3, h:260,a:.08},
+    {x:.26,y:.28,r:.55,h:(238+hueOff)%360,a:.15},
+    {x:.72,y:.38,r:.48,h:(280+hueOff)%360,a:.12},
+    {x:.5, y:.65,r:.42,h:(200+hueOff)%360,a:.10},
+    {x:.12,y:.62,r:.32,h:(310+hueOff)%360,a:.09},
+    {x:.85,y:.7, r:.3, h:(260+hueOff)%360,a:.08},
   ];
   nebulas.forEach(n => {
     const ng = ctx.createRadialGradient(n.x*w,n.y*h,0,n.x*w,n.y*h,n.r*w);
@@ -113,22 +120,23 @@ function drawSpace(ctx, w, h) {
   ctx.restore();
 
   /* ── Gas giant planet ── */
-  const px = w*.68, py = h*.26, pr = Math.min(w,h)*.23;
+  const px = w*pxFrac, py = h*pyFrac, pr = Math.min(w,h)*prFrac;
+  const pH = (240 + hueOff) % 360;
 
   // Outer atmosphere halo
   const atm = ctx.createRadialGradient(px,py,pr*.88,px,py,pr*2.2);
-  atm.addColorStop(0,  'rgba(90,55,220,.24)');
-  atm.addColorStop(.35,'rgba(65,35,180,.14)');
-  atm.addColorStop(1,  'rgba(30,15,120,0)');
+  atm.addColorStop(0,  `hsla(${pH},70%,55%,.24)`);
+  atm.addColorStop(.35,`hsla(${pH},65%,45%,.14)`);
+  atm.addColorStop(1,  `hsla(${pH},60%,30%,0)`);
   ctx.fillStyle = atm; ctx.fillRect(0,0,w,h);
 
   // Planet body
   const pG = ctx.createRadialGradient(px-pr*.34,py-pr*.28,pr*.03,px,py,pr);
-  pG.addColorStop(0,   '#9a78f0');
-  pG.addColorStop(.22, '#5c32c8');
-  pG.addColorStop(.52, '#2c1278');
-  pG.addColorStop(.8,  '#140840');
-  pG.addColorStop(1,   '#060118');
+  pG.addColorStop(0,   `hsl(${pH},75%,70%)`);
+  pG.addColorStop(.22, `hsl(${pH},60%,50%)`);
+  pG.addColorStop(.52, `hsl(${pH},72%,27%)`);
+  pG.addColorStop(.8,  `hsl(${pH},80%,14%)`);
+  pG.addColorStop(1,   `hsl(${pH},85%,5%)`);
   ctx.beginPath(); ctx.arc(px,py,pr,0,Math.PI*2);
   ctx.fillStyle = pG; ctx.fill();
 
@@ -174,11 +182,12 @@ function drawSpace(ctx, w, h) {
     {r0:1.8, r1:1.92,a:.18,h:260},
   ];
   rings.forEach(ring => {
+    const rh = (ring.h + hueOff) % 360;
     const rg = ctx.createRadialGradient(0,0,ring.r0*pr,0,0,ring.r1*pr);
-    rg.addColorStop(0, `hsla(${ring.h},70%,72%,0)`);
-    rg.addColorStop(.3,`hsla(${ring.h},75%,68%,${ring.a})`);
-    rg.addColorStop(.7,`hsla(${ring.h-15},65%,55%,${ring.a*.7})`);
-    rg.addColorStop(1, `hsla(${ring.h},60%,45%,0)`);
+    rg.addColorStop(0, `hsla(${rh},70%,72%,0)`);
+    rg.addColorStop(.3,`hsla(${rh},75%,68%,${ring.a})`);
+    rg.addColorStop(.7,`hsla(${rh-15},65%,55%,${ring.a*.7})`);
+    rg.addColorStop(1, `hsla(${rh},60%,45%,0)`);
     ctx.beginPath();
     ctx.arc(0,0,ring.r1*pr,0,Math.PI*2);
     ctx.arc(0,0,ring.r0*pr,0,Math.PI*2,true);
@@ -191,16 +200,22 @@ function drawSpace(ctx, w, h) {
    FOREST — bioluminescent night forest with layered depth
 ══════════════════════════════════════════════════════ */
 function drawForest(ctx, w, h) {
+  const rv = rng(7213);
+  const hueOff = rv() * 340;
+  const mxFrac = .12 + rv() * .22;
+  const myFrac = .08 + rv() * .18;
+  const skyH = (160 + hueOff) % 360;
+
   /* ── Night sky ── */
   const sky = ctx.createLinearGradient(0,0,0,h);
-  sky.addColorStop(0,  '#010a0e');
-  sky.addColorStop(.45,'#031410');
-  sky.addColorStop(.8, '#020c08');
-  sky.addColorStop(1,  '#020808');
+  sky.addColorStop(0,  `hsl(${skyH},70%,3%)`);
+  sky.addColorStop(.45,`hsl(${skyH},65%,5%)`);
+  sky.addColorStop(.8, `hsl(${skyH},60%,3%)`);
+  sky.addColorStop(1,  `hsl(${skyH},55%,3%)`);
   ctx.fillStyle=sky; ctx.fillRect(0,0,w,h);
 
   /* ── Moon ── */
-  const mx=w*.2, my=h*.15, mr=h*.065;
+  const mx=w*mxFrac, my=h*myFrac, mr=h*.065;
   // Moonlight halo
   const mlHalo = ctx.createRadialGradient(mx,my,mr,mx,my,mr*5.5);
   mlHalo.addColorStop(0, 'rgba(190,220,190,.22)');
@@ -281,7 +296,7 @@ function drawForest(ctx, w, h) {
   ctx.save();
   for (let i=0;i<22;i++) {
     const x=rb()*w, y=h*.62+rb()*h*.3;
-    const hue=130+rb()*60, sz=rb()*h*.025+h*.008;
+    const hue=(130+hueOff+rb()*60)%360, sz=rb()*h*.025+h*.008;
     ctx.shadowBlur=sz*4; ctx.shadowColor=`hsla(${hue},100%,70%,.9)`;
     ctx.fillStyle=`hsla(${hue},100%,82%,.85)`;
     ctx.beginPath(); ctx.arc(x,y,sz,0,Math.PI*2); ctx.fill();
@@ -294,7 +309,7 @@ function drawForest(ctx, w, h) {
   ctx.save();
   for (let i=0;i<18;i++) {
     const x=rf()*w, y=h*.35+rf()*h*.55;
-    const hue=85+rf()*90;
+    const hue=(85+hueOff+rf()*90)%360;
     ctx.shadowBlur=14; ctx.shadowColor=`hsla(${hue},100%,72%,.95)`;
     ctx.fillStyle=`hsla(${hue},100%,90%,.9)`;
     ctx.beginPath(); ctx.arc(x,y,rf()*2+.6,0,Math.PI*2); ctx.fill();
@@ -306,12 +321,16 @@ function drawForest(ctx, w, h) {
    NEON — rain-slick cyberpunk city at night
 ══════════════════════════════════════════════════════ */
 function drawNeon(ctx, w, h) {
+  const rv = rng(6173);
+  const hueOff = rv() * 340;
+  const skyH = (280 + hueOff) % 360;
+
   /* ── Sky & atmosphere ── */
   const sky=ctx.createLinearGradient(0,0,0,h);
-  sky.addColorStop(0, '#010007');
-  sky.addColorStop(.6,'#080012');
-  sky.addColorStop(.8,'#10001a');
-  sky.addColorStop(1, '#130010');
+  sky.addColorStop(0, `hsl(${skyH},88%,3%)`);
+  sky.addColorStop(.6,`hsl(${skyH},90%,5%)`);
+  sky.addColorStop(.8,`hsl(${skyH},92%,7%)`);
+  sky.addColorStop(1, `hsl(${skyH},88%,6%)`);
   ctx.fillStyle=sky; ctx.fillRect(0,0,w,h);
 
   const r=rng(55);
@@ -358,10 +377,10 @@ function drawNeon(ctx, w, h) {
 
   /* ── Neon signs with multi-pass glow ── */
   const signs=[
-    {x:w*.1, y:h*.45,t:'HOTEL',   hue:295,size:w*.042},
-    {x:w*.38,y:h*.42,t:'24HR',    hue:180,size:w*.038},
-    {x:w*.62,y:h*.48,t:'BAR',     hue:52, size:w*.045},
-    {x:w*.82,y:h*.43,t:'NOODLES', hue:310,size:w*.028},
+    {x:w*.1, y:h*.45,t:'HOTEL',   hue:(295+hueOff)%360,size:w*.042},
+    {x:w*.38,y:h*.42,t:'24HR',    hue:(180+hueOff)%360,size:w*.038},
+    {x:w*.62,y:h*.48,t:'BAR',     hue:(52+hueOff)%360, size:w*.045},
+    {x:w*.82,y:h*.43,t:'NOODLES', hue:(310+hueOff)%360,size:w*.028},
   ];
   signs.forEach(s => {
     ctx.font = `bold ${s.size}px 'Courier New', monospace`;
@@ -420,21 +439,26 @@ function drawNeon(ctx, w, h) {
    FLOW — liquid interference field with particle streams
 ══════════════════════════════════════════════════════ */
 function drawFlow(ctx, w, h) {
+  const rv = rng(5501);
+  const hueOff = rv() * 340;
+  const yShift = (rv() - .5) * .18;
+  const bgH = (260 + hueOff) % 360;
+
   /* ── Background ── */
   const bg=ctx.createRadialGradient(w*.5,h*.45,0,w*.5,h*.5,Math.hypot(w,h)*.65);
-  bg.addColorStop(0,'#0c0620'); bg.addColorStop(.55,'#060314'); bg.addColorStop(1,'#020109');
+  bg.addColorStop(0,`hsl(${bgH},70%,10%)`); bg.addColorStop(.55,`hsl(${bgH},80%,5%)`); bg.addColorStop(1,`hsl(${bgH},85%,3%)`);
   ctx.fillStyle=bg; ctx.fillRect(0,0,w,h);
 
   /* ── Flow field waves — layered interference ── */
   const waves=[
-    {hue:252,a:.72,freq:.016,amp:.18,ph:0,   y:.32},
-    {hue:198,a:.65,freq:.021,amp:.14,ph:1.2, y:.45},
-    {hue:285,a:.68,freq:.013,amp:.21,ph:2.4, y:.55},
-    {hue:178,a:.58,freq:.025,amp:.12,ph:.7,  y:.62},
-    {hue:328,a:.62,freq:.019,amp:.16,ph:3.1, y:.38},
-    {hue:220,a:.55,freq:.012,amp:.19,ph:1.8, y:.7},
-    {hue:162,a:.52,freq:.022,amp:.11,ph:4.2, y:.48},
-    {hue:308,a:.48,freq:.017,amp:.17,ph:2.9, y:.78},
+    {hue:(252+hueOff)%360,a:.72,freq:.016,amp:.18,ph:0,   y:.32+yShift},
+    {hue:(198+hueOff)%360,a:.65,freq:.021,amp:.14,ph:1.2, y:.45+yShift},
+    {hue:(285+hueOff)%360,a:.68,freq:.013,amp:.21,ph:2.4, y:.55+yShift},
+    {hue:(178+hueOff)%360,a:.58,freq:.025,amp:.12,ph:.7,  y:.62+yShift},
+    {hue:(328+hueOff)%360,a:.62,freq:.019,amp:.16,ph:3.1, y:.38+yShift},
+    {hue:(220+hueOff)%360,a:.55,freq:.012,amp:.19,ph:1.8, y:.7+yShift},
+    {hue:(162+hueOff)%360,a:.52,freq:.022,amp:.11,ph:4.2, y:.48+yShift},
+    {hue:(308+hueOff)%360,a:.48,freq:.017,amp:.17,ph:2.9, y:.78+yShift},
   ];
 
   waves.forEach((wv,wi) => {
@@ -486,23 +510,30 @@ function drawFlow(ctx, w, h) {
    PORTRAIT — dramatic cinematic character portrait
 ══════════════════════════════════════════════════════ */
 function drawPortrait(ctx, w, h) {
+  const rv = rng(8317);
+  const hueOff = rv() * 340;
+  const hxFrac = .38 + (rv() - .5) * .18;
+  const hyFrac = .28 + (rv() - .5) * .14;
+  const keyH = (25 + hueOff) % 360;
+  const rimH = (210 + hueOff) % 360;
+
   /* ── Background — warm split light ── */
-  const bg=ctx.createRadialGradient(w*.38,h*.32,0,w*.5,h*.5,Math.hypot(w,h)*.8);
-  bg.addColorStop(0, '#241008');
-  bg.addColorStop(.45,'#120608');
-  bg.addColorStop(.8, '#080308');
-  bg.addColorStop(1,  '#040204');
+  const bg=ctx.createRadialGradient(w*hxFrac,h*hyFrac,0,w*.5,h*.5,Math.hypot(w,h)*.8);
+  bg.addColorStop(0, `hsl(${keyH},45%,9%)`);
+  bg.addColorStop(.45,`hsl(${keyH},40%,5%)`);
+  bg.addColorStop(.8, `hsl(${keyH},35%,3%)`);
+  bg.addColorStop(1,  `hsl(${keyH},30%,2%)`);
   ctx.fillStyle=bg; ctx.fillRect(0,0,w,h);
   // Warm key light from upper-left
   const kl=ctx.createRadialGradient(w*.18,h*.12,0,w*.38,h*.3,w*.72);
-  kl.addColorStop(0,'rgba(255,150,60,.32)');
-  kl.addColorStop(.45,'rgba(200,80,20,.14)');
-  kl.addColorStop(1,'rgba(120,30,5,0)');
+  kl.addColorStop(0,`hsla(${keyH},100%,62%,.32)`);
+  kl.addColorStop(.45,`hsla(${keyH},100%,42%,.14)`);
+  kl.addColorStop(1,`hsla(${keyH},90%,25%,0)`);
   ctx.fillStyle=kl; ctx.fillRect(0,0,w,h);
   // Cool rim light from right
   const rl=ctx.createRadialGradient(w*.9,h*.3,0,w*.78,h*.4,w*.55);
-  rl.addColorStop(0,'rgba(60,120,200,.18)');
-  rl.addColorStop(1,'rgba(30,80,180,0)');
+  rl.addColorStop(0,`hsla(${rimH},70%,50%,.18)`);
+  rl.addColorStop(1,`hsla(${rimH},70%,35%,0)`);
   ctx.fillStyle=rl; ctx.fillRect(0,0,w,h);
 
   const hx=w*.5,hy=h*.36,hr=w*.195;
@@ -623,21 +654,27 @@ function drawPortrait(ctx, w, h) {
    DRAGON — epic dragon silhouette against stormy sky
 ══════════════════════════════════════════════════════ */
 function drawDragon(ctx, w, h) {
+  const rv = rng(9431);
+  const hueOff = rv() * 340;
+  const fireXFrac = .35 + rv() * .3;
+  const skyH = (320 + hueOff) % 360;
+  const fireH = (15 + hueOff) % 360;
+
   /* ── Dramatic sky ── */
   const sky=ctx.createLinearGradient(0,0,0,h);
-  sky.addColorStop(0, '#040110');
-  sky.addColorStop(.3,'#1a0412');
-  sky.addColorStop(.6,'#480c08');
-  sky.addColorStop(.85,'#240808');
-  sky.addColorStop(1,  '#0a0204');
+  sky.addColorStop(0, `hsl(${skyH},85%,3%)`);
+  sky.addColorStop(.3,`hsl(${(skyH+20)%360},80%,6%)`);
+  sky.addColorStop(.6,`hsl(${(skyH+30)%360},75%,14%)`);
+  sky.addColorStop(.85,`hsl(${(skyH+15)%360},70%,8%)`);
+  sky.addColorStop(1,  `hsl(${skyH},75%,3%)`);
   ctx.fillStyle=sky; ctx.fillRect(0,0,w,h);
 
   /* ── Fire glow on horizon ── */
-  const fg=ctx.createRadialGradient(w*.5,h*.72,0,w*.5,h*.68,w*.7);
-  fg.addColorStop(0,'rgba(255,140,30,.7)');
-  fg.addColorStop(.25,'rgba(220,55,10,.45)');
-  fg.addColorStop(.55,'rgba(160,20,5,.22)');
-  fg.addColorStop(1,'rgba(80,5,5,0)');
+  const fg=ctx.createRadialGradient(w*fireXFrac,h*.72,0,w*fireXFrac,h*.68,w*.7);
+  fg.addColorStop(0,`hsla(${fireH},100%,65%,.7)`);
+  fg.addColorStop(.25,`hsla(${fireH},100%,42%,.45)`);
+  fg.addColorStop(.55,`hsla(${fireH},90%,25%,.22)`);
+  fg.addColorStop(1,`hsla(${fireH},80%,12%,0)`);
   ctx.fillStyle=fg; ctx.fillRect(0,0,w,h);
 
   /* ── Clouds ── */
@@ -722,7 +759,7 @@ function drawDragon(ctx, w, h) {
   /* ── Dragon fire breath ── */
   ctx.save();
   // Outer fire volume
-  [[w*.04,h*.18,.32,255,60,.35],[w*.05,h*.19,.24,30,80,.45],[w*.06,h*.2,.16,18,100,.55],[w*.07,h*.21,.1,8,120,.65]].forEach(([x,y,r,hue,sat,a]) => {
+  [[w*.04,h*.18,.32,(255+hueOff)%360,60,.35],[w*.05,h*.19,.24,(30+hueOff)%360,80,.45],[w*.06,h*.2,.16,(18+hueOff)%360,100,.55],[w*.07,h*.21,.1,(8+hueOff)%360,120,.65]].forEach(([x,y,r,hue,sat,a]) => {
     const ffg=ctx.createRadialGradient(x,y,0,x,y,r*w);
     ffg.addColorStop(0,`hsla(${hue},${sat}%,90%,${a})`);
     ffg.addColorStop(.4,`hsla(${hue+10},${sat+20}%,65%,${a*.6})`);
@@ -751,13 +788,21 @@ function drawDragon(ctx, w, h) {
    CRYSTAL — underground crystal cave with caustic glow
 ══════════════════════════════════════════════════════ */
 function drawCrystal(ctx, w, h) {
+  const rv = rng(4127);
+  const hueOff = rv() * 340;
+  const bgH = (210 + hueOff) % 360;
+
   /* ── Cave atmosphere ── */
   const bg=ctx.createRadialGradient(w*.5,h*.5,0,w*.5,h*.5,Math.hypot(w,h)*.7);
-  bg.addColorStop(0,'#040812'); bg.addColorStop(.5,'#030610'); bg.addColorStop(1,'#010208');
+  bg.addColorStop(0,`hsl(${bgH},65%,5%)`); bg.addColorStop(.5,`hsl(${bgH},70%,4%)`); bg.addColorStop(1,`hsl(${bgH},75%,2%)`);
   ctx.fillStyle=bg; ctx.fillRect(0,0,w,h);
 
   // Ambient glow pools
-  [[.3,.6,200,.32],[.7,.7,272,.28],[.5,.35,228,.22]].forEach(([x,y,hue,r]) => {
+  [
+    [.3,.6,(200+hueOff)%360,.32],
+    [.7,.7,(272+hueOff)%360,.28],
+    [.5,.35,(228+hueOff)%360,.22]
+  ].forEach(([x,y,hue,r]) => {
     const gg=ctx.createRadialGradient(x*w,y*h,0,x*w,y*h,r*w);
     gg.addColorStop(0,`hsla(${hue},100%,58%,.14)`);
     gg.addColorStop(.45,`hsla(${hue+15},90%,42%,.08)`);
@@ -817,8 +862,8 @@ function drawCrystal(ctx, w, h) {
 
   // Floor crystals — growing up
   const floorClusters=[
-    {x:.1, hue:200,n:4},{x:.22,hue:212,n:5},{x:.38,hue:220,n:6},
-    {x:.52,hue:230,n:5},{x:.65,hue:245,n:4},{x:.78,hue:268,n:5},{x:.9,hue:278,n:4},
+    {x:.1, hue:(200+hueOff)%360,n:4},{x:.22,hue:(212+hueOff)%360,n:5},{x:.38,hue:(220+hueOff)%360,n:6},
+    {x:.52,hue:(230+hueOff)%360,n:5},{x:.65,hue:(245+hueOff)%360,n:4},{x:.78,hue:(268+hueOff)%360,n:5},{x:.9,hue:(278+hueOff)%360,n:4},
   ];
   floorClusters.forEach(cl => {
     for (let i=0;i<cl.n;i++) {
@@ -830,7 +875,7 @@ function drawCrystal(ctx, w, h) {
   });
 
   // Ceiling crystals — hanging down
-  [[.18,0,205],[.44,0,252],[.72,0,275]].forEach(([xr,yr,hue]) => {
+  [[.18,0,(205+hueOff)%360],[.44,0,(252+hueOff)%360],[.72,0,(275+hueOff)%360]].forEach(([xr,yr,hue]) => {
     for (let i=0;i<4;i++) {
       const ox=(i-1.5)*.06*w;
       const cw=(r()*.04+.022)*w;
@@ -863,14 +908,19 @@ function drawCrystal(ctx, w, h) {
    MECHA — battle mech in ruined city at dusk
 ══════════════════════════════════════════════════════ */
 function drawMecha(ctx, w, h) {
+  const rv = rng(2837);
+  const hueOff = rv() * 340;
+  const skyH = (215 + hueOff) % 360;
+  const energyH = (195 + hueOff) % 360;
+
   /* ── Background sky ── */
   const sky=ctx.createLinearGradient(0,0,0,h);
-  sky.addColorStop(0,'#050812'); sky.addColorStop(.4,'#0a0d20'); sky.addColorStop(.7,'#141018'); sky.addColorStop(1,'#060408');
+  sky.addColorStop(0,`hsl(${skyH},65%,5%)`); sky.addColorStop(.4,`hsl(${skyH},68%,8%)`); sky.addColorStop(.7,`hsl(${skyH},60%,7%)`); sky.addColorStop(1,`hsl(${skyH},55%,4%)`);
   ctx.fillStyle=sky; ctx.fillRect(0,0,w,h);
 
   // Energy field horizon glow
   const hg=ctx.createRadialGradient(w*.5,h*.6,0,w*.5,h*.6,w*.6);
-  hg.addColorStop(0,'rgba(0,180,255,.14)'); hg.addColorStop(.4,'rgba(0,120,220,.07)'); hg.addColorStop(1,'rgba(0,80,180,0)');
+  hg.addColorStop(0,`hsla(${energyH},100%,55%,.14)`); hg.addColorStop(.4,`hsla(${energyH},100%,42%,.07)`); hg.addColorStop(1,`hsla(${energyH},90%,35%,0)`);
   ctx.fillStyle=hg; ctx.fillRect(0,0,w,h);
 
   /* ── Destroyed city silhouette ── */
@@ -881,7 +931,7 @@ function drawMecha(ctx, w, h) {
   ctx.closePath(); ctx.fill();
 
   /* ── Grid scan lines in BG ── */
-  ctx.save(); ctx.strokeStyle='rgba(0,150,255,.06)'; ctx.lineWidth=.5;
+  ctx.save(); ctx.strokeStyle=`hsla(${energyH},100%,50%,.06)`; ctx.lineWidth=.5;
   for (let y=0;y<h;y+=h/18) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
   for (let x=0;x<w;x+=w/12) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
   ctx.restore();
@@ -939,8 +989,8 @@ function drawMecha(ctx, w, h) {
   const vw=sc*.34, vh=sc*.08;
   // Visor glow
   [24,14,6,2].forEach(blur => {
-    ctx.shadowBlur=blur; ctx.shadowColor='rgba(0,220,255,.9)';
-    ctx.fillStyle=blur===2?'rgba(180,240,255,.95)':'rgba(0,200,255,.4)';
+    ctx.shadowBlur=blur; ctx.shadowColor=`hsla(${energyH},100%,65%,.9)`;
+    ctx.fillStyle=blur===2?`hsla(${energyH},80%,90%,.95)`:`hsla(${energyH},100%,60%,.4)`;
     ctx.beginPath(); ctx.ellipse(vx,vy,vw,vh,0,0,Math.PI*2); ctx.fill();
   });
   ctx.restore();
@@ -949,8 +999,8 @@ function drawMecha(ctx, w, h) {
   ctx.save();
   const corex=mc, corey=h*.55+sc*.05;
   [30,18,8,3].forEach(blur => {
-    ctx.shadowBlur=blur; ctx.shadowColor='rgba(0,180,255,.9)';
-    ctx.fillStyle=blur===3?'rgba(200,240,255,.95)':'rgba(0,160,255,.5)';
+    ctx.shadowBlur=blur; ctx.shadowColor=`hsla(${energyH},100%,60%,.9)`;
+    ctx.fillStyle=blur===3?`hsla(${energyH},80%,88%,.95)`:`hsla(${energyH},100%,55%,.5)`;
     ctx.beginPath(); ctx.arc(corex,corey,sc*.055*(1-blur/50),0,Math.PI*2); ctx.fill();
   });
   ctx.restore();
@@ -968,10 +1018,16 @@ function drawMecha(ctx, w, h) {
    FIRE — ceremonial bonfire with embers and smoke
 ══════════════════════════════════════════════════════ */
 function drawFire(ctx, w, h) {
+  const rv = rng(3613);
+  const hueOff = rv() * 340;
+  const fxFrac = .38 + rv() * .24;
+  const baseH = (10 + hueOff) % 360;
+  const bgH = (baseH + 10) % 360;
+
   /* ── Dark bg ── */
-  const bg=ctx.createRadialGradient(w*.5,h*.75,0,w*.5,h*.55,w*.85);
-  bg.addColorStop(0,'rgba(60,20,5,.9)'); bg.addColorStop(.5,'rgba(20,5,2,.95)'); bg.addColorStop(1,'rgba(2,1,1,1)');
-  ctx.fillStyle='#020101'; ctx.fillRect(0,0,w,h);
+  const bg=ctx.createRadialGradient(w*fxFrac,h*.75,0,w*fxFrac,h*.55,w*.85);
+  bg.addColorStop(0,`hsla(${bgH},80%,12%,.9)`); bg.addColorStop(.5,`hsla(${bgH},70%,5%,.95)`); bg.addColorStop(1,`hsla(${bgH},60%,2%,1)`);
+  ctx.fillStyle=`hsl(${bgH},55%,2%)`; ctx.fillRect(0,0,w,h);
   ctx.fillStyle=bg; ctx.fillRect(0,0,w,h);
 
   /* ── Flame layers — largest to smallest ── */
@@ -992,22 +1048,22 @@ function drawFire(ctx, w, h) {
   }
 
   // Outer warm volume
-  flame(w*.5,h*.2,w*.62,h*.68,10,.52);
-  flame(w*.42,h*.3,w*.44,h*.52,12,.48);
-  flame(w*.58,h*.28,w*.38,h*.5,8,.45);
+  flame(w*fxFrac,h*.2,w*.62,h*.68,(10+hueOff)%360,.52);
+  flame(w*(fxFrac-.08),h*.3,w*.44,h*.52,(12+hueOff)%360,.48);
+  flame(w*(fxFrac+.08),h*.28,w*.38,h*.5,(8+hueOff)%360,.45);
   // Mid flames
-  flame(w*.5,h*.32,w*.42,h*.52,18,.62);
-  flame(w*.46,h*.38,w*.32,h*.42,20,.58);
-  flame(w*.54,h*.35,w*.28,h*.44,15,.55);
+  flame(w*fxFrac,h*.32,w*.42,h*.52,(18+hueOff)%360,.62);
+  flame(w*(fxFrac-.04),h*.38,w*.32,h*.42,(20+hueOff)%360,.58);
+  flame(w*(fxFrac+.04),h*.35,w*.28,h*.44,(15+hueOff)%360,.55);
   // Inner hot flames
-  flame(w*.5,h*.44,w*.26,h*.38,30,.75);
-  flame(w*.48,h*.48,w*.18,h*.3,38,.72);
-  flame(w*.52,h*.46,w*.16,h*.32,35,.68);
+  flame(w*fxFrac,h*.44,w*.26,h*.38,(30+hueOff)%360,.75);
+  flame(w*(fxFrac-.02),h*.48,w*.18,h*.3,(38+hueOff)%360,.72);
+  flame(w*(fxFrac+.02),h*.46,w*.16,h*.32,(35+hueOff)%360,.68);
   // White-hot core
   ctx.save();
-  ctx.shadowBlur=22; ctx.shadowColor='rgba(255,255,200,.9)';
-  ctx.fillStyle='rgba(255,255,240,.92)';
-  ctx.beginPath(); ctx.arc(w*.5,h*.55,w*.035,0,Math.PI*2); ctx.fill(); ctx.fill();
+  ctx.shadowBlur=22; ctx.shadowColor=`hsla(${(baseH+40)%360},100%,88%,.9)`;
+  ctx.fillStyle=`hsla(${(baseH+50)%360},80%,95%,.92)`;
+  ctx.beginPath(); ctx.arc(w*fxFrac,h*.55,w*.035,0,Math.PI*2); ctx.fill(); ctx.fill();
   ctx.restore();
 
   /* ── Logs / coal base ── */
@@ -1055,8 +1111,8 @@ function drawFire(ctx, w, h) {
   ctx.restore();
 
   /* ── Ambient fire light on ground ── */
-  const al=ctx.createRadialGradient(w*.5,h*.82,0,w*.5,h*.82,w*.55);
-  al.addColorStop(0,'rgba(255,120,20,.25)'); al.addColorStop(.4,'rgba(200,60,5,.1)'); al.addColorStop(1,'rgba(120,20,2,0)');
+  const al=ctx.createRadialGradient(w*fxFrac,h*.82,0,w*fxFrac,h*.82,w*.55);
+  al.addColorStop(0,`hsla(${baseH},100%,55%,.25)`); al.addColorStop(.4,`hsla(${baseH},90%,35%,.1)`); al.addColorStop(1,`hsla(${baseH},80%,20%,0)`);
   ctx.fillStyle=al; ctx.fillRect(0,0,w,h);
 }
 
