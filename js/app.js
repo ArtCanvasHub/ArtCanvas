@@ -663,6 +663,9 @@
     window._artSeed = work.id;
     drawOn(cv, fn);
     window._artSeed = 0;
+    const hue = (work.id * 137) % 360;
+    const sat = 85 + (work.id * 23 % 35);
+    cv.style.filter = `hue-rotate(${hue}deg) saturate(${sat}%)`;
     card.appendChild(cv);
 
     /* Daily Deviation badge for top-liked works */

@@ -267,7 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.className = 'hscroll-card';
       const cv = document.createElement('canvas');
       cv.width = 160; cv.height = 213;
-      drawOn(cv, fn);
+      window._artSeed = work.id; drawOn(cv, fn); window._artSeed = 0;
+      cv.style.filter = `hue-rotate(${(work.id * 137) % 360}deg) saturate(${85 + (work.id * 23 % 35)}%)`;
       card.appendChild(cv);
       const ov = document.createElement('div');
       ov.className = 'hscroll-card-ov';
@@ -300,7 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
           card.className = 'hscroll-card';
           const cv = document.createElement('canvas');
           cv.width = 160; cv.height = 213;
-          drawOn(cv, fn);
+          window._artSeed = work.id; drawOn(cv, fn); window._artSeed = 0;
+          cv.style.filter = `hue-rotate(${(work.id * 137) % 360}deg) saturate(${85 + (work.id * 23 % 35)}%)`;
           card.appendChild(cv);
           const ov = document.createElement('div');
           ov.className = 'hscroll-card-ov';
