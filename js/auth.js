@@ -19,33 +19,39 @@ function signOut() {
   location.replace('login.html');
 }
 
-/* Redirect to login if not authenticated; returns user or null */
+/* Auto-login as demo if not authenticated — no wall for first-time visitors */
 function requireAuth() {
-  const user = getUser();
+  let user = getUser();
   if (!user) {
-    location.replace('login.html');
-    return null;
+    user = {
+      name:       'Guest Artist',
+      email:      'guest@artcanvashub.io',
+      picture:    null,
+      sub:        'demo_guest',
+      given_name: 'Guest',
+      isDemo:     true,
+    };
+    setUser(user);
   }
   return user;
 }
 
-/* Demo login (no real Google account needed) */
+/* Demo login */
 function loginAsDemo() {
   setUser({
     name:       'Guest Artist',
     email:      'guest@artcanvashub.io',
     picture:    null,
-    sub:        'demo_' + Date.now(),
+    sub:        'demo_guest',
     given_name: 'Guest',
     isDemo:     true,
   });
-  location.href = 'index.html';
+  location.href = 'browse.html';
 }
 
 /* Called by Google Identity Services after successful sign-in */
 function handleGoogleLogin(response) {
   try {
-    /* Decode JWT payload (base64url → JSON) */
     const b64 = response.credential.split('.')[1]
       .replace(/-/g, '+').replace(/_/g, '/');
     const pad = b64.length % 4 ? '='.repeat(4 - b64.length % 4) : '';
@@ -58,7 +64,7 @@ function handleGoogleLogin(response) {
       sub:        payload.sub,
       given_name: payload.given_name || payload.name.split(' ')[0],
     });
-    location.href = 'index.html';
+    location.href = 'browse.html';
   } catch (e) {
     console.error('Google login error:', e);
     const errEl = document.getElementById('loginError');
