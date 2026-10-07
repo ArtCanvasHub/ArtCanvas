@@ -32,6 +32,33 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
+/* ── HERO STAT LINKS ──────────────────────────────────── */
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.hs-link[data-stat]');
+  if (!btn) return;
+  const stat = btn.dataset.stat;
+  if (stat === 'followers') {
+    document.getElementById('followersGrid')?.scrollIntoView({behavior: 'smooth', block: 'center'});
+  } else if (stat === 'works') {
+    document.querySelector('[data-tab="portfolio"]')?.click();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  } else if (stat === 'liked') {
+    document.querySelector('[data-tab="liked"]')?.click();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  } else if (stat === 'following') {
+    window.AC?.showToast('Following feed coming soon!');
+  }
+});
+
+/* ── JOURNAL + WRITE ENTRY ────────────────────────────── */
+document.addEventListener('click', e => {
+  if (e.target.closest('.empty-cta[href]')) return; /* let <a> navigate */
+  const btn = e.target.closest('button.empty-cta:not([data-action])');
+  if (btn && btn.textContent.includes('Entry')) {
+    window.AC?.showToast('Journal editor coming soon!');
+  }
+});
+
 /* ── INIT ─────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   /* Nav + profile avatars */

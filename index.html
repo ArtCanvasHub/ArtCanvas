@@ -13,22 +13,17 @@
 
 <!-- ── GLOBAL NAV ─────────────────────────────────── -->
 <nav class="nav">
-  <a class="logo" href="#">
+  <a class="logo" href="index.html">
     <span class="logo-icon">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/>
-        <polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/>
-        <polygon points="6,12.5 14,12.5 15,15 5,15" fill="#05c26b" opacity=".55"/>
-      </svg>
+      <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".95"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
     </span>
     <span class="logo-text">Art<em>Canvas</em></span>
   </a>
+  <button class="nav-shop">Shop</button>
 
   <div class="srch">
     <span class="srch-ico">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </span>
     <input type="search" placeholder="Search artists, works, collections…">
   </div>
@@ -41,20 +36,13 @@
   <div class="nav-r">
     <button class="btn-submit">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"/></svg>
-      Upload Work
+      Submit Your Art
     </button>
-
     <button class="nav-icon-btn" title="Messages">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </button>
-
     <button class="nav-icon-btn" title="Notifications">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-dot"></span>
     </button>
 
@@ -120,16 +108,16 @@
           <div class="hero-stats">
             <span class="hs-item">✦ Artist for 2 years</span>
             <span class="hs-dot">·</span>
-            <span class="hs-link">8.4K Followers</span>
+            <button class="hs-link" data-stat="followers">8.4K Followers</button>
             <span class="hs-dot">·</span>
-            <span class="hs-link">312 Following</span>
+            <button class="hs-link" data-stat="following">312 Following</button>
             <span class="hs-dot">·</span>
-            <span class="hs-link">142 Works</span>
+            <button class="hs-link" data-stat="works">142 Works</button>
           </div>
           <div class="hero-stats">
             <span class="hs-item">2.1M Profile Views</span>
             <span class="hs-dot">·</span>
-            <span class="hs-link">2.1K Liked</span>
+            <button class="hs-link" data-stat="liked">2.1K Liked</button>
             <span class="hs-dot">·</span>
             <span class="hs-item">3 Groups</span>
           </div>
@@ -181,7 +169,7 @@
               </div>
               <div class="empty-banner-title">No works yet</div>
               <p class="empty-banner-sub">When you upload your work, it will appear here for everyone to see.</p>
-              <button class="empty-banner-cta">
+              <button class="empty-banner-cta" data-action="upload">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
                 Upload Your First Work
               </button>
@@ -255,16 +243,16 @@
           <div class="sc">
             <div class="sc-hd">Tags</div>
             <div class="tag-cloud">
-              <span class="tchip">#digitalart</span>
-              <span class="tchip">#scifi</span>
-              <span class="tchip">#fantasy</span>
-              <span class="tchip">#concept</span>
-              <span class="tchip">#space</span>
-              <span class="tchip">#illustration</span>
-              <span class="tchip">#character</span>
-              <span class="tchip">#3D</span>
-              <span class="tchip">#environment</span>
-              <span class="tchip">#neon</span>
+              <a class="tchip" href="browse.html">#digitalart</a>
+              <a class="tchip" href="browse.html">#scifi</a>
+              <a class="tchip" href="browse.html">#fantasy</a>
+              <a class="tchip" href="browse.html">#concept</a>
+              <a class="tchip" href="browse.html">#space</a>
+              <a class="tchip" href="browse.html">#illustration</a>
+              <a class="tchip" href="browse.html">#character</a>
+              <a class="tchip" href="browse.html">#3D</a>
+              <a class="tchip" href="browse.html">#environment</a>
+              <a class="tchip" href="browse.html">#neon</a>
             </div>
           </div>
 
@@ -318,7 +306,7 @@
             </div>
             <div class="empty-title">Your portfolio is empty</div>
             <div class="empty-sub">Upload your first work to start building your portfolio.</div>
-            <button class="empty-cta">
+            <button class="empty-cta" data-action="upload">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14m-7-7h14"/></svg>
               Upload a Work
             </button>
@@ -338,7 +326,7 @@
           </div>
           <div class="empty-title">No liked works yet</div>
           <div class="empty-sub">Works you like will appear here so you can find them again.</div>
-          <button class="empty-cta">Explore Works</button>
+          <a class="empty-cta" href="browse.html">Explore Works</a>
         </div>
       </div>
     </div>
@@ -434,10 +422,7 @@
   <div class="footer-inner">
     <div class="footer-logo">
       <span class="footer-logo-icon">
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/>
-          <polygon points="10,7 12,12.5 8,12.5" fill="#05c26b"/>
-        </svg>
+        <svg viewBox="0 0 20 20" fill="none"><polygon points="10,2 17.5,17.5 2.5,17.5" fill="#fff" opacity=".9"/><polygon points="10,7 12,12.5 8,12.5" fill="#06070d"/></svg>
       </span>
       <span class="footer-logo-text">Art<em>Canvas</em></span>
     </div>
